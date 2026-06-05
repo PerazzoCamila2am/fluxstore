@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Fluxstore Rosario - catálogo de vapers con pedidos por WhatsApp." />
+  <title>Fluxstore | Vapers en Rosario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="age-gate" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+    <div class="age-card">
+      <span class="badge">+18</span>
+      <h1 id="ageTitle">Fluxstore es solo para mayores de edad</h1>
+      <p>Este sitio exhibe productos de vapeo. Confirmá que sos mayor de 18 años para continuar.</p>
+      <div class="age-actions">
+        <button class="btn primary" id="enterSite">Soy mayor de 18</button>
+        <a class="btn ghost" href="https://www.google.com">Salir</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <nav class="nav wrap">
+      <a class="brand" href="#inicio" aria-label="Inicio Fluxstore">
+        <span class="brand-mark">⚡</span>
+        <span>fluxstore</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#precios">Precios</a>
+        <a href="#envios">Envíos</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Vapers en Rosario · pedidos por WhatsApp</p>
+        <h1>Vapes con estética neon, promos claras y compra rápida.</h1>
+        <p class="hero-text">Catálogo mobile-first para ver sabores, precios y armar tu pedido en segundos.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#catalogo">Ver catálogo</a>
+          <a class="btn whatsapp" id="heroWhatsapp" href="#">Pedir por WhatsApp</a>
+        </div>
+        <div class="trust-row" aria-label="Beneficios">
+          <span>🚚 Envíos en el día</span>
+          <span>💸 Efectivo / transferencia</span>
+          <span>📍 Rosario</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="assets/luffbar-55k.jpeg" alt="Promoción Luffbar 55K Fluxstore" />
+        <div class="float-price"><strong>55K</strong><span>$25.990</span></div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Marcas disponibles">
+      <div><span>LUFFBAR</span><span>ELFBAR</span><span>LOST MARY</span><span>IGNITE ICE</span><span>RABBEATS</span><span>ROSARIO</span></div>
+    </section>
+
+    <section class="wrap section" id="catalogo">
+      <div class="section-head">
+        <p class="eyebrow">Catálogo</p>
+        <h2>Elegí tu modelo</h2>
+        <p>Filtrá por puffs y agregá productos para enviar el pedido directo a WhatsApp.</p>
+      </div>
+
+      <div class="filters" role="list" aria-label="Filtros de catálogo">
+        <button class="chip active" data-filter="all">Todos</button>
+        <button class="chip" data-filter="55k">55K</button>
+        <button class="chip" data-filter="50k">50K</button>
+        <button class="chip" data-filter="40k">40K</button>
+        <button class="chip" data-filter="20k">20K</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="promo section">
+      <div class="wrap promo-grid">
+        <div>
+          <p class="eyebrow">Estilo Fluxstore</p>
+          <h2>Diseño visual pensado para historias, reels y celular.</h2>
+          <p>Fondos oscuros, detalles neón, cards con brillo y botones grandes para convertir visitas de Instagram en pedidos.</p>
+        </div>
+        <img src="assets/price-list.jpeg" alt="Lista de precios estilo neon Fluxstore" />
+      </div>
+    </section>
+
+    <section class="wrap section" id="precios">
+      <div class="section-head">
+        <p class="eyebrow">Lista rápida</p>
+        <h2>Precios destacados</h2>
+      </div>
+      <div class="price-table" id="priceTable"></div>
+    </section>
+
+    <section class="wrap section split" id="envios">
+      <div>
+        <p class="eyebrow">Cómo comprar</p>
+        <h2>Pedido simple en 3 pasos</h2>
+      </div>
+      <div class="steps">
+        <article><span>1</span><h3>Elegí el vape</h3><p>Mirás modelo, precio y sabores disponibles.</p></article>
+        <article><span>2</span><h3>Armá el pedido</h3><p>Agregás al carrito y tocás WhatsApp.</p></article>
+        <article><span>3</span><h3>Coordinás entrega</h3><p>Confirmás zona, medio de pago y horario.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap section contact-card" id="contacto">
+      <p class="eyebrow">Contacto</p>
+      <h2>¿Listo para pedir?</h2>
+      <p>Atención por WhatsApp. Cambiá el número en <code>script.js</code> si querés usar otro.</p>
+      <a class="btn whatsapp big" id="contactWhatsapp" href="#">Abrir WhatsApp</a>
+      <p class="legal">Venta exclusiva a mayores de 18 años. El consumo de nicotina puede generar dependencia. Consultá y cumplí las normas vigentes de tu zona.</p>
+    </section>
+  </main>
+
+  <aside class="cart" id="cart" aria-label="Carrito">
+    <button class="cart-toggle" id="cartToggle">🛒 <span id="cartCount">0</span></button>
+    <div class="cart-panel" id="cartPanel">
+      <div class="cart-head">
+        <h2>Tu pedido</h2>
+        <button id="clearCart">Vaciar</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-total"><span>Total estimado</span><strong id="cartTotal">$0</strong></div>
+      <a class="btn whatsapp full" id="sendOrder" href="#">Enviar pedido</a>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div><strong>fluxstore</strong><p>Vapers en Rosario.</p></div>
+      <div><a href="#catalogo">Catálogo</a><a href="#precios">Precios</a><a href="#contacto">WhatsApp</a></div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
