@@ -62,8 +62,16 @@ function renderProducts(filter = "all") {
           <span class="product-price">${money(p.price)}</span>
         </div>
         <span class="puffs">${p.puffs.toUpperCase()} puffs</span>
+
         <p class="flavors">${p.flavors}</p>
-        <button class="btn" onclick="addToCart('${p.id}')">Agregar</button>
+
+        <div class="product-actions">
+          <button class="btn" onclick="addToCart('${p.id}')">Agregar</button>
+           <a class="btn ghost" href="${waLink(`Hola Fluxstore, quiero consultar por ${p.name}. ¿Qué sabores tenés disponibles?`)}" target="_blank">
+              Consultar
+            </a>
+        </div>
+        
       </div>
     </article>
   `).join("");
