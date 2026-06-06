@@ -135,13 +135,13 @@ function setup() {
   document.querySelector("#heroWhatsapp").href = waLink(genericText);
   document.querySelector("#contactWhatsapp").href = waLink(genericText);
 
-  const ageGate = document.querySelector("#ageGate");
+  /*const ageGate = document.querySelector("#ageGate");
   if (localStorage.getItem("fluxstoreAdult") === "yes") ageGate.classList.add("hidden");
   document.querySelector("#enterSite").addEventListener("click", () => {
     localStorage.setItem("fluxstoreAdult", "yes");
     ageGate.classList.add("hidden");
   });
-}
+}*/
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
