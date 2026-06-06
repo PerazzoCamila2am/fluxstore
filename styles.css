@@ -14,3 +14,21 @@ a{color:inherit;text-decoration:none} img{max-width:100%;display:block} button{f
   object-fit: cover;
   box-shadow: 0 0 14px rgba(255, 0, 200, 0.8);
 }
+
+.floating-whatsapp {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 29;
+  background: linear-gradient(135deg, #20e070, #0dbb59);
+  color: #04140a;
+  font-weight: 900;
+  padding: 14px 18px;
+  border-radius: 999px;
+  box-shadow: 0 0 24px rgba(32, 224, 112, 0.35);
+}
+
+.social-text {
+  color: var(--pink);
+  font-weight: 900;
+}

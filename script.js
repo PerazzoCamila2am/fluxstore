@@ -109,7 +109,7 @@ function renderCart() {
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
 
   const message = cart.length
-    ? `Hola Fluxstore, quiero hacer este pedido:%0A${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("%0A")}%0A%0ATotal estimado: ${money(total)}%0AEstoy en Rosario, ¿hay stock?`
+    ? `Hola Fluxstore, quiero hacer este pedido:%0A${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("%0A")}%0A%0ATotal estimado: ${money(total)}%0A¿Me confirmás disponibilidad, sabores y envío?`
     : "Hola Fluxstore, quiero consultar disponibilidad y precios.";
   document.querySelector("#sendOrder").href = waLink(decodeURIComponent(message));
 }
