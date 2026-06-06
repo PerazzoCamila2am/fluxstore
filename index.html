@@ -134,6 +134,53 @@
       <a class="btn whatsapp full" id="sendOrder" href="#">Enviar pedido</a>
     </div>
   </aside>
+  <section class="order-modal" id="orderModal">
+  <div class="order-box">
+    <button class="order-close" id="closeOrderForm" type="button">×</button>
+
+    <p class="eyebrow">Finalizar pedido</p>
+    <h2>Datos para coordinar</h2>
+    <p class="order-help">Completá tus datos y te abrimos WhatsApp con el pedido listo.</p>
+
+    <form id="orderForm" class="order-form">
+      <label>
+        Nombre
+        <input type="text" id="customerName" placeholder="Ej: Camila" required>
+      </label>
+
+      <label>
+        WhatsApp
+        <input type="tel" id="customerWhatsapp" placeholder="Ej: 3415907913" required>
+      </label>
+
+      <label>
+        Dirección o barrio
+        <input type="text" id="customerAddress" placeholder="Ej: Centro / Pellegrini y Mitre" required>
+      </label>
+
+      <label>
+        Forma de pago
+        <select id="customerPayment" required>
+          <option value="">Elegir opción</option>
+          <option value="Efectivo">Efectivo</option>
+          <option value="Transferencia">Transferencia</option>
+        </select>
+      </label>
+
+      <label>
+        Horario preferido
+        <input type="text" id="customerTime" placeholder="Ej: Después de las 18 hs">
+      </label>
+
+      <label>
+        Observaciones
+        <textarea id="customerNotes" placeholder="Ej: Consultar sabores disponibles"></textarea>
+      </label>
+
+      <button class="btn whatsapp full" type="submit">Confirmar pedido</button>
+    </form>
+  </div>
+</section>
 
   <footer class="footer">
     <div class="wrap footer-grid">

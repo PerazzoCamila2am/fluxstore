@@ -111,27 +111,82 @@ function renderCart() {
     </div>
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
 
-  const message = cart.length
-    ? `Hola Fluxstore, quiero hacer este pedido:\n${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("\n")}\n\nTotal estimado: ${money(total)}\n¿Me confirmás disponibilidad, sabores y envío?`
-    : "Hola Fluxstore, quiero consultar disponibilidad y precios.";
-
   const sendOrderBtn = document.querySelector("#sendOrder");
-  sendOrderBtn.href = waLink(message);
+  sendOrderBtn.href = "#";
+  sendOrderBtn.onclick = openOrderForm;
+}
 
-  sendOrderBtn.onclick = () => {
-    const orderData = {
-      nombre: "Sin completar",
-      whatsapp: "Sin completar",
-      direccion: "Sin completar",
-      pago: "Sin completar",
-      horario: "Sin completar",
-      productos: cart.map(i => `${i.qty} x ${i.name} - ${money(i.price)}`).join(" | "),
-      total: money(total),
-      observaciones: "Pedido enviado desde la web"
-    };
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+}
 
-    saveOrderToGoogleSheets(orderData);
+function getCartProductsText() {
+  return cart.map(i => `${i.qty} x ${i.name} - ${money(i.price)}`).join(" | ");
+}
+
+function getCartWhatsappText(customerData) {
+  const total = getCartTotal();
+
+  return `Hola Fluxstore, quiero hacer este pedido:
+
+${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("\n")}
+
+Total estimado: ${money(total)}
+
+Nombre: ${customerData.nombre}
+WhatsApp: ${customerData.whatsapp}
+Dirección/Barrio: ${customerData.direccion}
+Pago: ${customerData.pago}
+Horario: ${customerData.horario || "A coordinar"}
+Observaciones: ${customerData.observaciones || "Sin observaciones"}
+
+¿Me confirmás disponibilidad, sabores y envío?`;
+}
+
+function openOrderForm(event) {
+  if (event) event.preventDefault();
+
+  if (!cart.length) {
+    window.open(waLink("Hola Fluxstore, quiero consultar disponibilidad y precios."), "_blank");
+    return;
+  }
+
+  document.querySelector("#orderModal").classList.add("open");
+}
+
+function closeOrderForm() {
+  document.querySelector("#orderModal").classList.remove("open");
+}
+
+async function handleOrderSubmit(event) {
+  event.preventDefault();
+
+  const total = getCartTotal();
+
+  const customerData = {
+    nombre: document.querySelector("#customerName").value.trim(),
+    whatsapp: document.querySelector("#customerWhatsapp").value.trim(),
+    direccion: document.querySelector("#customerAddress").value.trim(),
+    pago: document.querySelector("#customerPayment").value,
+    horario: document.querySelector("#customerTime").value.trim(),
+    observaciones: document.querySelector("#customerNotes").value.trim()
   };
+
+  const orderData = {
+    ...customerData,
+    productos: getCartProductsText(),
+    total: money(total)
+  };
+
+  await saveOrderToGoogleSheets(orderData);
+
+  const message = getCartWhatsappText(customerData);
+  window.open(waLink(message), "_blank");
+
+  cart = [];
+  saveCart();
+  closeOrderForm();
+  document.querySelector("#orderForm").reset();
 }
 
 function setup() {
@@ -150,6 +205,12 @@ function setup() {
   document.querySelector("#cartToggle").addEventListener("click", () => document.querySelector("#cart").classList.toggle("open"));
   document.querySelector("#clearCart").addEventListener("click", () => { cart = []; saveCart(); });
   document.querySelector("#menuBtn").addEventListener("click", () => document.querySelector("#navLinks").classList.toggle("open"));
+
+  document.querySelector("#orderForm").addEventListener("submit", handleOrderSubmit);
+  document.querySelector("#closeOrderForm").addEventListener("click", closeOrderForm);
+  document.querySelector("#orderModal").addEventListener("click", event => {
+  if (event.target.id === "orderModal") closeOrderForm();
+});
 
   const genericText = "Hola Fluxstore, quiero consultar por vapers disponibles.";
   document.querySelector("#heroWhatsapp").href = waLink(genericText);
