@@ -187,6 +187,29 @@ function closeSuccessModal() {
   document.querySelector("#successModal").classList.remove("open");
 }
 
+function validateOrderData(customerData) {
+  const errors = [];
+
+  if (customerData.nombre.length < 2) {
+    errors.push("Ingresá tu nombre.");
+  }
+
+  const cleanWhatsapp = customerData.whatsapp.replace(/\D/g, "");
+  if (cleanWhatsapp.length < 8) {
+    errors.push("Ingresá un WhatsApp válido.");
+  }
+
+  if (customerData.direccion.length < 3) {
+    errors.push("Ingresá tu dirección o barrio.");
+  }
+
+  if (!customerData.pago) {
+    errors.push("Elegí una forma de pago.");
+  }
+
+  return errors;
+}
+
 async function handleOrderSubmit(event) {
   event.preventDefault();
 
@@ -202,14 +225,26 @@ async function handleOrderSubmit(event) {
     observaciones: document.querySelector("#customerNotes").value.trim()
   };
 
+  const errors = validateOrderData(customerData);
+
+  if (errors.length) {
+  alert(errors.join("\n"));
+  return;
+}
+
+  const submitBtn = event.target.querySelector("button[type='submit']");
+   submitBtn.disabled = true;
+   submitBtn.textContent = "Enviando pedido...";
+  
+
   const orderData = {
   pedidoId: orderId,
   ...customerData,
   productos: getCartProductsText(),
   total: money(total)
   };
+  try {
   trackClick("Confirmar pedido", getCartProductsText());
-
   await saveOrderToGoogleSheets(orderData);
 
   const message = getCartWhatsappText({ ...customerData, pedidoId: orderId });
@@ -220,6 +255,10 @@ async function handleOrderSubmit(event) {
   closeOrderForm();
   document.querySelector("#orderForm").reset();
   openSuccessModal();
+} finally {
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Confirmar pedido";
+}
 }
 
 function setup() {
