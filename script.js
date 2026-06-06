@@ -1,6 +1,6 @@
-// Cambiá este número por el WhatsApp real de Fluxstore.
-// Formato recomendado: código país + característica + número, sin espacios ni símbolos.
+
 const WHATSAPP_NUMBER = "5493415907913";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTW9DKie_iYz__7nl0ASAo_P3Z_xyfyuM4mbNb6FOu0sjynehhCDoMRZ___K2ZpPo/exec";
 
 const products = [
   {
@@ -47,6 +47,7 @@ const products = [
 
 let cart = JSON.parse(localStorage.getItem("fluxstoreCart") || "[]");
 const money = value => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(value);
+
 const waLink = text => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 
 function renderProducts(filter = "all") {
@@ -99,8 +100,10 @@ function saveCart() {
 function renderCart() {
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
   document.querySelector("#cartCount").textContent = count;
   document.querySelector("#cartTotal").textContent = money(total);
+
   document.querySelector("#cartItems").innerHTML = cart.length ? cart.map(item => `
     <div class="cart-item">
       <div><strong>${item.name}</strong><br><small>${item.qty} x ${money(item.price)}</small></div>
@@ -109,9 +112,26 @@ function renderCart() {
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
 
   const message = cart.length
-    ? `Hola Fluxstore, quiero hacer este pedido:%0A${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("%0A")}%0A%0ATotal estimado: ${money(total)}%0A¿Me confirmás disponibilidad, sabores y envío?`
+    ? `Hola Fluxstore, quiero hacer este pedido:\n${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("\n")}\n\nTotal estimado: ${money(total)}\n¿Me confirmás disponibilidad, sabores y envío?`
     : "Hola Fluxstore, quiero consultar disponibilidad y precios.";
-  document.querySelector("#sendOrder").href = waLink(decodeURIComponent(message));
+
+  const sendOrderBtn = document.querySelector("#sendOrder");
+  sendOrderBtn.href = waLink(message);
+
+  sendOrderBtn.onclick = () => {
+    const orderData = {
+      nombre: "Sin completar",
+      whatsapp: "Sin completar",
+      direccion: "Sin completar",
+      pago: "Sin completar",
+      horario: "Sin completar",
+      productos: cart.map(i => `${i.qty} x ${i.name} - ${money(i.price)}`).join(" | "),
+      total: money(total),
+      observaciones: "Pedido enviado desde la web"
+    };
+
+    saveOrderToGoogleSheets(orderData);
+  };
 }
 
 function setup() {
@@ -140,9 +160,27 @@ function setup() {
   document.querySelector("#enterSite").addEventListener("click", () => {
     localStorage.setItem("fluxstoreAdult", "yes");
     ageGate.classList.add("hidden");
-  });
-}*/
+  });*/
+}
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 document.addEventListener("DOMContentLoaded", setup);
+
+async function saveOrderToGoogleSheets(orderData) {
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderData)
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error guardando pedido:", error);
+    return false;
+  }
+}
