@@ -172,6 +172,14 @@ function closeOrderForm() {
   document.querySelector("#orderModal").classList.remove("open");
 }
 
+function openSuccessModal() {
+  document.querySelector("#successModal").classList.add("open");
+}
+
+function closeSuccessModal() {
+  document.querySelector("#successModal").classList.remove("open");
+}
+
 async function handleOrderSubmit(event) {
   event.preventDefault();
 
@@ -202,6 +210,7 @@ async function handleOrderSubmit(event) {
   saveCart();
   closeOrderForm();
   document.querySelector("#orderForm").reset();
+  openSuccessModal();
 }
 
 function setup() {
@@ -225,6 +234,11 @@ function setup() {
   document.querySelector("#closeOrderForm").addEventListener("click", closeOrderForm);
   document.querySelector("#orderModal").addEventListener("click", event => {
   if (event.target.id === "orderModal") closeOrderForm();
+});
+
+  document.querySelector("#closeSuccess").addEventListener("click", closeSuccessModal);
+  document.querySelector("#successModal").addEventListener("click", event => {
+  if (event.target.id === "successModal") closeSuccessModal();
 });
 
   const genericText = "Hola Fluxstore, quiero consultar por vapers disponibles.";

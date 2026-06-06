@@ -289,3 +289,55 @@ a{color:inherit;text-decoration:none} img{max-width:100%;display:block} button{f
     flex-direction: column;
   }
 }
+
+.success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: none;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(14px);
+  padding: 18px;
+}
+
+.success-modal.open {
+  display: grid;
+}
+
+.success-box {
+  width: min(440px, 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035)), var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.success-icon {
+  width: 68px;
+  height: 68px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  background: rgba(20, 244, 255, .12);
+  border: 1px solid rgba(20, 244, 255, .35);
+  color: var(--cyan);
+  font-size: 2.2rem;
+  font-weight: 900;
+  box-shadow: 0 0 26px rgba(20, 244, 255, .22);
+}
+
+.success-box h2 {
+  font-family: "Bebas Neue", Inter, sans-serif;
+  font-size: 3rem;
+  line-height: .9;
+  margin: 0;
+}
+
+.success-box p {
+  color: var(--muted);
+  line-height: 1.5;
+}
