@@ -67,9 +67,14 @@ function renderProducts(filter = "all") {
 
         <div class="product-actions">
           <button class="btn" onclick="addToCart('${p.id}')">Agregar</button>
-           <a class="btn ghost" href="${waLink(`Hola Fluxstore, quiero consultar por ${p.name}. ¿Qué sabores tenés disponibles?`)}" target="_blank">
+           <a 
+            class="btn ghost" 
+            href="${waLink(`Hola Fluxstore, quiero consultar por ${p.name}. ¿Qué sabores tenés disponibles?`)}" 
+           target="_blank"
+          onclick="trackClick('Consultar producto', '${p.name}')"
+            >
               Consultar
-            </a>
+          </a>
         </div>
         
       </div>
@@ -158,7 +163,8 @@ function openOrderForm(event) {
     window.open(waLink("Hola Fluxstore, quiero consultar disponibilidad y precios."), "_blank");
     return;
   }
-
+  
+  trackClick("Abrir formulario de pedido", "Carrito");
   document.querySelector("#orderModal").classList.add("open");
 }
 
@@ -185,6 +191,7 @@ async function handleOrderSubmit(event) {
     productos: getCartProductsText(),
     total: money(total)
   };
+  trackClick("Confirmar pedido", getCartProductsText());
 
   await saveOrderToGoogleSheets(orderData);
 
@@ -224,6 +231,14 @@ function setup() {
   document.querySelector("#heroWhatsapp").href = waLink(genericText);
   document.querySelector("#contactWhatsapp").href = waLink(genericText);
 
+  document.querySelector("#heroWhatsapp").addEventListener("click", () => {
+  trackClick("WhatsApp hero", "Consulta general");
+});
+
+document.querySelector("#contactWhatsapp").addEventListener("click", () => {
+  trackClick("WhatsApp contacto", "Consulta general");
+});
+
   /*const ageGate = document.querySelector("#ageGate");
   if (localStorage.getItem("fluxstoreAdult") === "yes") ageGate.classList.add("hidden");
   document.querySelector("#enterSite").addEventListener("click", () => {
@@ -234,6 +249,7 @@ function setup() {
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
+window.trackClick = trackClick;
 document.addEventListener("DOMContentLoaded", setup);
 
 async function saveOrderToGoogleSheets(orderData) {
@@ -251,5 +267,25 @@ async function saveOrderToGoogleSheets(orderData) {
   } catch (error) {
     console.error("Error guardando pedido:", error);
     return false;
+  }
+}
+
+async function trackClick(action, detail = "") {
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        type: "click",
+        action,
+        detail,
+        page: window.location.href
+      })
+    });
+  } catch (error) {
+    console.error("Error registrando click:", error);
   }
 }
