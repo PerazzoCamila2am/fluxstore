@@ -137,10 +137,17 @@ function getCartProductsText() {
   return cart.map(i => `${i.qty} x ${i.name} - ${money(i.price)}`).join(" | ");
 }
 
+function createOrderId() {
+  const now = new Date();
+  const datePart = now.toISOString().slice(2, 10).replace(/-/g, "");
+  const timePart = String(now.getHours()).padStart(2, "0") + String(now.getMinutes()).padStart(2, "0") + String(now.getSeconds()).padStart(2, "0");
+  return `FX-${datePart}-${timePart}`;
+}
+
 function getCartWhatsappText(customerData) {
   const total = getCartTotal();
 
-  return `Hola Fluxstore, quiero hacer este pedido:
+  return `Hola Fluxstore, quiero hacer este pedido ${customerData.pedidoId || ""}:
 
 ${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("\n")}
 
@@ -184,6 +191,7 @@ async function handleOrderSubmit(event) {
   event.preventDefault();
 
   const total = getCartTotal();
+  const orderId = createOrderId();
 
   const customerData = {
     nombre: document.querySelector("#customerName").value.trim(),
@@ -195,15 +203,16 @@ async function handleOrderSubmit(event) {
   };
 
   const orderData = {
-    ...customerData,
-    productos: getCartProductsText(),
-    total: money(total)
+  pedidoId: orderId,
+  ...customerData,
+  productos: getCartProductsText(),
+  total: money(total)
   };
   trackClick("Confirmar pedido", getCartProductsText());
 
   await saveOrderToGoogleSheets(orderData);
 
-  const message = getCartWhatsappText(customerData);
+  const message = getCartWhatsappText({ ...customerData, pedidoId: orderId });
   window.open(waLink(message), "_blank");
 
   cart = [];
