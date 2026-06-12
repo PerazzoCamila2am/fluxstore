@@ -15,7 +15,7 @@ const products = [
     id: "rabbeats-50k",
     name: "Elfbar RabBeats 50K",
     puffs: "50k",
-    price: 23990,
+    price: 22990,
     image: "assets/rabbeats-50k.jpeg",
     flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice"
   },
