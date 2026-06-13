@@ -41,7 +41,8 @@ const products = [
     puffs: "20k",
     price: 17990,
     image: "assets/lost-mary-20k.png",
-    flavors: "Ice Mint y consultar sabores disponibles"
+    flavors: "Ice Mint y consultar sabores disponibles",
+    soldOut: true
   }
 ];
 
@@ -54,8 +55,11 @@ function renderProducts(filter = "all") {
   const grid = document.querySelector("#productGrid");
   const list = filter === "all" ? products : products.filter(p => p.puffs === filter);
   grid.innerHTML = list.map(p => `
-    <article class="product-card" data-puffs="${p.puffs}">
-      <img src="${p.image}" alt="${p.name}">
+    <article class="product-card ${p.soldOut ? "sold-out" : ""}" data-puffs="${p.puffs}">
+  <div class="product-image-wrap">
+    <img src="${p.image}" alt="${p.name}">
+    ${p.soldOut ? `<span class="sold-out-badge">Agotado</span>` : ""}
+  </div>
       <div class="product-body">
         <div class="product-top">
           <h3 class="product-title">${p.name}</h3>
@@ -66,7 +70,10 @@ function renderProducts(filter = "all") {
         <p class="flavors">${p.flavors}</p>
 
         <div class="product-actions">
-          <button class="btn" onclick="addToCart('${p.id}')">Agregar</button>
+          ${p.soldOut
+  ? `<button class="btn disabled" disabled>Agotado</button>`
+  : `<button class="btn" onclick="addToCart('${p.id}')">Agregar</button>`
+}
            <a 
             class="btn ghost" 
             href="${waLink(`Hola Fluxstore, quiero consultar por ${p.name}. ¿Qué sabores tenés disponibles?`)}" 
