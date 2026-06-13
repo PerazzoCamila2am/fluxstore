@@ -8,7 +8,7 @@ const products = [
     name: "Luffbar Flare 55K",
     puffs: "55k",
     price: 25990,
-    image: "assets/luffbar-55k.jpeg",
+    image: "assets/luffbar-55k.png",
     flavors: "Fruity Cool Dragonfruit, Alaska Ice, Straw Nana, Grape Menthol, Grape Slushy"
   },
   {
@@ -16,7 +16,7 @@ const products = [
     name: "Elfbar RabBeats 50K",
     puffs: "50k",
     price: 22990,
-    image: "assets/rabbeats-50k.jpeg",
+    image: "assets/rabbeats-50k.png",
     flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice"
   },
   {
@@ -24,7 +24,7 @@ const products = [
     name: "Elfbar Ice King 40K",
     puffs: "40k",
     price: 23990,
-    image: "assets/elfbar-ice-40k.jpeg",
+    image: "assets/elfbar-ice-40k.png",
     flavors: "Baja Splash, Peach Blue Slush, Strawberry Watermelon, Hawaiian Slush"
   },
   {
@@ -32,7 +32,7 @@ const products = [
     name: "Ignite Ice 40K",
     puffs: "40k",
     price: 25500,
-    image: "assets/ignite-ice-40k.jpeg",
+    image: "assets/ignite-ice-40k.png",
     flavors: "Strawberry, Mint, Grape"
   },
   {
@@ -40,7 +40,7 @@ const products = [
     name: "Lost Mary MO20000 Pro",
     puffs: "20k",
     price: 17990,
-    image: "assets/lost-mary-20k.jpeg",
+    image: "assets/lost-mary-20k.png",
     flavors: "Ice Mint y consultar sabores disponibles"
   }
 ];
