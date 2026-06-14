@@ -32,6 +32,8 @@ const products = [
     name: "Ignite Ice 40K",
     puffs: "40k",
     price: 25500,
+    oldPrice: 30000,
+    discount: "15% OFF",
     image: "assets/ignite-ice-40k.png",
     flavors: "Strawberry, Mint, Grape"
   },
@@ -63,10 +65,13 @@ function renderProducts(filter = "all") {
       <div class="product-body">
         <div class="product-top">
           <h3 class="product-title">${p.name}</h3>
-          <span class="product-price">${money(p.price)}</span>
+          <span class="product-price">
+          ${p.oldPrice ? `<small class="old-price">${money(p.oldPrice)}</small>` : ""}
+           ${money(p.price)}
+          </span>
         </div>
         <span class="puffs">${p.puffs.toUpperCase()} puffs</span>
-
+        ${p.discount ? `<span class="discount-badge">${p.discount}</span>` : ""}
         <p class="flavors">${p.flavors}</p>
 
         <div class="product-actions">
@@ -93,7 +98,10 @@ function renderPrices() {
   document.querySelector("#priceTable").innerHTML = products.map(p => `
     <div class="price-row">
       <strong>${p.name}</strong>
-      <span>${money(p.price)}</span>
+      <span>
+      ${p.oldPrice ? `<small class="old-price">${money(p.oldPrice)}</small>` : ""}
+      ${money(p.price)}
+      </span>
     </div>
   `).join("");
 }
