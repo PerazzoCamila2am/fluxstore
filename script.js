@@ -35,8 +35,18 @@ const products = [
     oldPrice: 30000,
     discount: "15% OFF",
     image: "assets/ignite-ice-40k.png",
-    flavors: "Strawberry, Mint, Grape"
+    flavors: "Strawberry, Mint, Grape, Peach Berry Ice, Strawberry Watermelon"
   },
+
+  {
+    id: "wefume-30k",
+    name: "Wefume 30k",
+    puffs: "30k",
+    price: 24000,
+    image: "assets/wefume-30k.png",
+    flavors: "Strawberry Kiwi, Lush Ice"
+  },
+
   {
     id: "lost-mary-20k",
     name: "Lost Mary MO20000 Pro",
