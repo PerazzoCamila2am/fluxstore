@@ -43,6 +43,9 @@ const products = [
     name: "Wefume 30k",
     puffs: "30k",
     price: 24000,
+    promoQty: 2,
+    promoPrice: 41900,
+    promoText: "Llevando 2: $41.900",
     image: "assets/wefume-30k.png",
     flavors: "Strawberry Kiwi, Lush Ice"
   },
@@ -63,6 +66,17 @@ const money = value => new Intl.NumberFormat("es-AR", { style: "currency", curre
 
 const waLink = text => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 
+function getItemSubtotal(item) {
+  if (item.promoQty && item.promoPrice && item.qty >= item.promoQty) {
+    const promoGroups = Math.floor(item.qty / item.promoQty);
+    const remainingUnits = item.qty % item.promoQty;
+
+    return promoGroups * item.promoPrice + remainingUnits * item.price;
+  }
+
+  return item.price * item.qty;
+}
+
 function renderProducts(filter = "all") {
   const grid = document.querySelector("#productGrid");
   const list = filter === "all" ? products : products.filter(p => p.puffs === filter);
@@ -82,6 +96,7 @@ function renderProducts(filter = "all") {
         </div>
         <span class="puffs">${p.puffs.toUpperCase()} puffs</span>
         ${p.discount ? `<span class="discount-badge">${p.discount}</span>` : ""}
+        ${p.promoText ? `<span class="promo-badge">${p.promoText}</span>` : ""}
         <p class="flavors">${p.flavors}</p>
 
         <div class="product-actions">
@@ -137,14 +152,20 @@ function saveCart() {
 
 function renderCart() {
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const total = cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
 
   document.querySelector("#cartCount").textContent = count;
   document.querySelector("#cartTotal").textContent = money(total);
 
   document.querySelector("#cartItems").innerHTML = cart.length ? cart.map(item => `
     <div class="cart-item">
-      <div><strong>${item.name}</strong><br><small>${item.qty} x ${money(item.price)}</small></div>
+      <div>
+  <strong>${item.name}</strong><br>
+  <small>
+    ${item.qty} x ${money(item.price)}
+    ${item.promoQty && item.qty >= item.promoQty ? `<br>Promo aplicada: ${item.promoQty} x ${money(item.promoPrice)}` : ""}
+  </small>
+</div>
       <button class="chip" onclick="removeFromCart('${item.id}')">×</button>
     </div>
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
@@ -155,11 +176,15 @@ function renderCart() {
 }
 
 function getCartTotal() {
-  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  return cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
 }
 
 function getCartProductsText() {
-  return cart.map(i => `${i.qty} x ${i.name} - ${money(i.price)}`).join(" | ");
+  return cart.map(i => {
+  const promoApplied = i.promoQty && i.qty >= i.promoQty;
+  const promoText = promoApplied ? ` promo ${i.promoQty} x ${money(i.promoPrice)}` : "";
+  return `${i.qty} x ${i.name} - ${money(getItemSubtotal(i))}${promoText}`;
+}).join(" | ");
 }
 
 function createOrderId() {
@@ -174,7 +199,11 @@ function getCartWhatsappText(customerData) {
 
   return `Hola Fluxstore, quiero hacer este pedido ${customerData.pedidoId || ""}:
 
-${cart.map(i => `• ${i.qty} x ${i.name} - ${money(i.price)}`).join("\n")}
+${cart.map(i => {
+  const promoApplied = i.promoQty && i.qty >= i.promoQty;
+  const promoText = promoApplied ? ` promo aplicada (${i.promoQty} x ${money(i.promoPrice)})` : "";
+  return `• ${i.qty} x ${i.name} - ${money(getItemSubtotal(i))}${promoText}`;
+}).join("\n")}
 
 Total estimado: ${money(total)}
 
