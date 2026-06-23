@@ -17,7 +17,7 @@ const products = [
     puffs: "50k",
     price: 22990,
     image: "assets/rabbeats-50k.png",
-    flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice"
+    flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice"
   },
   {
     id: "elfbar-ice-40k",
@@ -35,7 +35,7 @@ const products = [
     oldPrice: 30000,
     discount: "15% OFF",
     image: "assets/ignite-ice-40k.png",
-    flavors: "Strawberry, Mint, Grape, Peach Berry Ice, Strawberry Watermelon"
+    flavors: "Strawberry, Mint, Grape, Peach Berry Ice, Strawberry Watermelon, Banana Cherry, Watermelon Ice"
   },
 
   {
@@ -47,7 +47,7 @@ const products = [
     promoPrice: 41900,
     promoText: "Llevando 2: $41.900",
     image: "assets/wefume-30k.png",
-    flavors: "Strawberry Kiwi, Lush Ice"
+    flavors: "Strawberry Kiwi, Lush Ice, Apple Pineapple, Miami Mix, Ice Mint"
   },
 
   {
