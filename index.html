@@ -84,15 +84,7 @@
       <div class="product-grid" id="productGrid"></div>
     </section>
 
-    <section class="promo section">
-  <div class="wrap promo-grid">
-    <div>
-      <p class="eyebrow">Estilo Fluxstore</p>
-      <h2>Vapes premium, sabores intensos y compra fácil.</h2>
-      <p>Elegí tu modelo favorito, agregalo al carrito y hacé tu pedido por WhatsApp en pocos pasos.</p>
-    </div>
-  </div>
-</section>
+   
 
     <section class="wrap section" id="precios">
       <div class="section-head">
@@ -113,6 +105,57 @@
         <article><span>3</span><h3>Coordinás entrega</h3><p>Confirmás zona, medio de pago y horario.</p></article>
       </div>
     </section>
+
+    <section class="wrap section reviews-section" id="resenas">
+  <div class="reviews-head">
+    <div>
+      <p class="eyebrow">Reseñas</p>
+      <h2>Experiencias Fluxstore</h2>
+      <p>Dejá tu calificación y contanos cómo fue tu experiencia.</p>
+    </div>
+
+    <div class="rating-summary">
+      <strong id="averageRating">5.0</strong>
+      <span id="averageStars">★★★★★</span>
+      <small id="reviewCount">0 reseñas</small>
+    </div>
+  </div>
+
+  <div class="reviews-grid" id="reviewsGrid">
+    <article class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p>Cargando reseñas...</p>
+      <strong>Fluxstore</strong>
+    </article>
+  </div>
+
+  <form class="review-form" id="reviewForm">
+    <h3>Dejar una reseña</h3>
+
+    <label>
+  Tu nombre
+  <input type="text" id="reviewName" placeholder="Tu nombre">
+</label>
+
+<label>
+  Calificación
+  <div class="star-picker" id="starPicker" aria-label="Elegir calificación">
+    <button type="button" class="star-btn active" data-rating="1">★</button>
+    <button type="button" class="star-btn active" data-rating="2">★</button>
+    <button type="button" class="star-btn active" data-rating="3">★</button>
+    <button type="button" class="star-btn active" data-rating="4">★</button>
+    <button type="button" class="star-btn active" data-rating="5">★</button>
+  </div>
+  <input type="hidden" id="reviewRating" value="5">
+</label>
+
+<label>
+  Comentario opcional
+  <textarea id="reviewComment" placeholder="Podés dejar un comentario o solo enviar estrellas"></textarea>
+</label>
+    <button class="btn primary full" type="submit">Publicar reseña</button>
+  </form>
+  </section>
 
     <section class="wrap section contact-card" id="contacto">
       <p class="eyebrow">Contacto</p>

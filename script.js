@@ -315,10 +315,139 @@ async function handleOrderSubmit(event) {
 }
 }
 
+function starsText(rating) {
+  const full = "★".repeat(rating);
+  const empty = "☆".repeat(5 - rating);
+  return full + empty;
+}
+
+async function loadReviews() {
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL);
+    const data = await response.json();
+
+    if (!data.ok || !Array.isArray(data.reviews)) {
+      renderReviews([]);
+      return;
+    }
+
+    renderReviews(data.reviews);
+  } catch (error) {
+    console.error("Error cargando reseñas:", error);
+    renderReviews([]);
+  }
+}
+
+function renderReviews(reviews) {
+  const grid = document.querySelector("#reviewsGrid");
+
+  if (!reviews.length) {
+    grid.innerHTML = `
+      <article class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>Todavía no hay reseñas. Sé la primera persona en dejar tu opinión.</p>
+        <strong>Fluxstore</strong>
+      </article>
+    `;
+
+    document.querySelector("#averageRating").textContent = "5.0";
+    document.querySelector("#averageStars").textContent = "★★★★★";
+    document.querySelector("#reviewCount").textContent = "0 reseñas";
+    return;
+  }
+
+  grid.innerHTML = reviews.map(review => `
+    <article class="review-card">
+      <div class="review-stars">${starsText(Number(review.estrellas))}</div>
+      ${review.comentario ? `<p>${review.comentario}</p>` : `<p>Dejó su calificación sin comentario.</p>`}
+      <strong>${review.nombre || "Cliente Fluxstore"}</strong>
+    </article>
+  `).join("");
+
+  const average = reviews.reduce((sum, review) => sum + Number(review.estrellas), 0) / reviews.length;
+
+  document.querySelector("#averageRating").textContent = average.toFixed(1);
+  document.querySelector("#averageStars").textContent = starsText(Math.round(average));
+  document.querySelector("#reviewCount").textContent = `${reviews.length} reseñas`;
+}
+
+async function saveReviewToGoogleSheets(reviewData) {
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        type: "review",
+        ...reviewData
+      })
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error guardando reseña:", error);
+    return false;
+  }
+}
+
+function setReviewRating(rating) {
+  document.querySelector("#reviewRating").value = rating;
+
+  document.querySelectorAll(".star-btn").forEach(star => {
+    const starValue = Number(star.dataset.rating);
+    star.classList.toggle("active", starValue <= rating);
+  });
+}
+
+function setupStarPicker() {
+  document.querySelectorAll(".star-btn").forEach(star => {
+    star.addEventListener("click", () => {
+      setReviewRating(Number(star.dataset.rating));
+    });
+  });
+
+  setReviewRating(5);
+}
+
+async function handleReviewSubmit(event) {
+  event.preventDefault();
+
+  const submitBtn = event.target.querySelector("button[type='submit']");
+
+  const reviewData = {
+  nombre: document.querySelector("#reviewName").value.trim() || "Cliente Fluxstore",
+  estrellas: Number(document.querySelector("#reviewRating").value),
+  comentario: document.querySelector("#reviewComment").value.trim()
+  };
+
+  if (!reviewData.estrellas || reviewData.estrellas < 1 || reviewData.estrellas > 5) {
+    alert("Elegí una calificación válida.");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Publicando...";
+
+  await saveReviewToGoogleSheets(reviewData);
+
+  document.querySelector("#reviewForm").reset();
+
+  setTimeout(() => {
+    loadReviews();
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Publicar reseña";
+    alert("Gracias por dejar tu reseña.");
+  }, 1200);
+  }
+
 function setup() {
   renderProducts();
   renderPrices();
   renderCart();
+  loadReviews();
+  setupStarPicker();
 
   document.querySelectorAll(".chip[data-filter]").forEach(chip => {
     chip.addEventListener("click", () => {
@@ -333,6 +462,7 @@ function setup() {
   document.querySelector("#menuBtn").addEventListener("click", () => document.querySelector("#navLinks").classList.toggle("open"));
 
   document.querySelector("#orderForm").addEventListener("submit", handleOrderSubmit);
+  document.querySelector("#reviewForm").addEventListener("submit", handleReviewSubmit);
   document.querySelector("#closeOrderForm").addEventListener("click", closeOrderForm);
   document.querySelector("#orderModal").addEventListener("click", event => {
   if (event.target.id === "orderModal") closeOrderForm();
