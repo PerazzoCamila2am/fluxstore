@@ -7,7 +7,7 @@ const products = [
     id: "luffbar-55k",
     name: "Luffbar Flare 55K",
     puffs: "55k",
-    price: 25990,
+    price: 26990,
     image: "assets/luffbar-55k.png",
     flavors: "Fruity Cool Dragonfruit, Alaska Ice, Straw Nana, Grape Menthol, Grape Slushy"
   },
@@ -15,7 +15,7 @@ const products = [
     id: "rabbeats-50k",
     name: "Elfbar RabBeats 50K",
     puffs: "50k",
-    price: 22990,
+    price: 24990,
     image: "assets/rabbeats-50k.png",
     flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice"
   },
@@ -23,7 +23,7 @@ const products = [
     id: "elfbar-ice-40k",
     name: "Elfbar Ice King 40K",
     puffs: "40k",
-    price: 23990,
+    price: 24990,
     image: "assets/elfbar-ice-40k.png",
     flavors: "Baja Splash, Peach Blue Slush, Strawberry Watermelon, Hawaiian Slush"
   },
@@ -31,9 +31,9 @@ const products = [
     id: "ignite-ice-40k",
     name: "Ignite Ice 40K",
     puffs: "40k",
-    price: 25500,
-    oldPrice: 30000,
-    discount: "15% OFF",
+    price: 29990,
+    /*oldPrice: 30000,
+    discount: "15% OFF",*/
     image: "assets/ignite-ice-40k.png",
     flavors: "Strawberry, Mint, Grape, Peach Berry Ice, Strawberry Watermelon, Banana Cherry, Watermelon Ice"
   },
@@ -42,10 +42,10 @@ const products = [
     id: "wefume-30k",
     name: "Wefume 30k",
     puffs: "30k",
-    price: 24000,
+    price: 23990,
     promoQty: 2,
-    promoPrice: 41900,
-    promoText: "Llevando 2: $41.900",
+    promoPrice: 41990,
+    promoText: "Llevando 2: $41.990",
     image: "assets/wefume-30k.png",
     flavors: "Strawberry Kiwi, Lush Ice, Apple Pineapple, Miami Mix, Ice Mint"
   },
