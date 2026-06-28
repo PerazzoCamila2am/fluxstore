@@ -1,6 +1,9 @@
 
 const WHATSAPP_NUMBER = "5493415907913";
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTW9DKie_iYz__7nl0ASAo_P3Z_xyfyuM4mbNb6FOu0sjynehhCDoMRZ___K2ZpPo/exec";
+const PAYMENT_ALIAS = "fluxstoree";
+const PAYMENT_HOLDER = "Constanza Malvina Pompei";
+const PAYMENT_CVU = "3840200500000015731294";
 
 const products = [
   {
@@ -11,7 +14,7 @@ const products = [
     image: "assets/luffbar-55k.png",
     flavors: "Fruity Cool Dragonfruit, Alaska Ice, Straw Nana, Grape Menthol, Grape Slushy",
     flavorOptions: [
-      { name: "Fruity Cool Dragonfruit", image: "assets/luffbar-fruity-cool-dragonfruit.jpeg",  stock: true },
+      { name: "Fruity Cool Dragonfruit", image: "assets/luffbar-fruity-cool-dragonfruit.jpeg",  stock: false },
       { name: "Alaska Ice", image: "assets/luffbar-alaska-ice.jpeg",  stock: true },
       { name: "Straw Nana", image: "assets/luffbar-straw-nana.jpeg",  stock: true},
       { name: "Grape Menthol", image: "assets/luffbar-fruity-cool-grape-menthol.jpeg",  stock: true},
@@ -30,7 +33,7 @@ const products = [
       { name: "Blueberry Lemon", image: "assets/rabbeats-blueberry-lemon.jpeg",  stock: false},
       { name: "Strawberry Ice", image: "assets/rabbeats-strawberry-ice.jpeg",  stock: false},
       { name: "Pineapple Ice", image: "assets/rabbeats-pineapple-ice.jpeg",  stock: true},
-      { name: "Fanta Strawberry", image: "assets/rabbeats-fanta-strawberry.jpeg",  stock: true},
+      { name: "Fanta Strawberry", image: "assets/rabbeats-fanta-strawberry.jpeg",  stock: false},
       { name: "Banana Ice", image: "assets/rabbeats-banana-ice.jpeg",  stock: true},
       { name: "Menthol", image: "assets/rabbeats-menthol.jpeg",  stock: false},
       { name: "Sakura Grape", image: "assets/rabbeats-sakura-grape.jpeg",  stock: false},
@@ -217,22 +220,26 @@ function renderCart() {
   document.querySelector("#cartItems").innerHTML = cart.length ? cart.map(item => `
     <div class="cart-item">
       <div>
-  <strong>${item.name}</strong><br>
-  ${item.selectedFlavor ? `<small>Sabor: ${item.selectedFlavor}</small><br>` : ""}
-  <small>
-    ${item.qty} x ${money(item.price)}
-    ${item.promoQty && item.qty >= item.promoQty ? `<br>Promo aplicada: ${item.promoQty} x ${money(item.promoPrice)}` : ""}
-  </small>
-</div>
+        <strong>${item.name}</strong><br>
+        ${item.selectedFlavor ? `<small>Sabor: ${item.selectedFlavor}</small><br>` : ""}
+        <small>
+          ${item.qty} x ${money(item.price)}
+          ${item.promoQty && item.qty >= item.promoQty ? `<br>Promo aplicada: ${item.promoQty} x ${money(item.promoPrice)}` : ""}
+        </small>
+      </div>
+
       <button class="chip" onclick="removeFromCart('${item.cartId || item.id}')">×</button>
     </div>
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
 
   const sendOrderBtn = document.querySelector("#sendOrder");
-  sendOrderBtn.href = "#";
-  sendOrderBtn.onclick = openOrderForm;
-}
+sendOrderBtn.href = "#";
+sendOrderBtn.onclick = event => {
+  event.preventDefault();
+  openCheckout();
+};
 
+}
 function getCartTotal() {
   return cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
 }
@@ -275,103 +282,6 @@ Observaciones: ${customerData.observaciones || "Sin observaciones"}
 ¿Me confirmás disponibilidad, sabores y envío?`;
 }
 
-function openOrderForm(event) {
-  if (event) event.preventDefault();
-
-  if (!cart.length) {
-    window.open(waLink("Hola Fluxstore, quiero consultar disponibilidad y precios."), "_blank");
-    return;
-  }
-  
-  trackClick("Abrir formulario de pedido", "Carrito");
-  document.querySelector("#orderModal").classList.add("open");
-}
-
-function closeOrderForm() {
-  document.querySelector("#orderModal").classList.remove("open");
-}
-
-function openSuccessModal() {
-  document.querySelector("#successModal").classList.add("open");
-}
-
-function closeSuccessModal() {
-  document.querySelector("#successModal").classList.remove("open");
-}
-
-function validateOrderData(customerData) {
-  const errors = [];
-
-  if (customerData.nombre.length < 2) {
-    errors.push("Ingresá tu nombre.");
-  }
-
-  const cleanWhatsapp = customerData.whatsapp.replace(/\D/g, "");
-  if (cleanWhatsapp.length < 8) {
-    errors.push("Ingresá un WhatsApp válido.");
-  }
-
-  if (customerData.direccion.length < 3) {
-    errors.push("Ingresá tu dirección o barrio.");
-  }
-
-  if (!customerData.pago) {
-    errors.push("Elegí una forma de pago.");
-  }
-
-  return errors;
-}
-
-async function handleOrderSubmit(event) {
-  event.preventDefault();
-
-  const total = getCartTotal();
-  const orderId = createOrderId();
-
-  const customerData = {
-    nombre: document.querySelector("#customerName").value.trim(),
-    whatsapp: document.querySelector("#customerWhatsapp").value.trim(),
-    direccion: document.querySelector("#customerAddress").value.trim(),
-    pago: document.querySelector("#customerPayment").value,
-    horario: document.querySelector("#customerTime").value.trim(),
-    observaciones: document.querySelector("#customerNotes").value.trim()
-  };
-
-  const errors = validateOrderData(customerData);
-
-  if (errors.length) {
-  alert(errors.join("\n"));
-  return;
-}
-
-  const submitBtn = event.target.querySelector("button[type='submit']");
-   submitBtn.disabled = true;
-   submitBtn.textContent = "Enviando pedido...";
-  
-
-  const orderData = {
-  pedidoId: orderId,
-  ...customerData,
-  productos: getCartProductsText(),
-  total: money(total)
-  };
-  try {
-  trackClick("Confirmar pedido", getCartProductsText());
-  await saveOrderToGoogleSheets(orderData);
-
-  const message = getCartWhatsappText({ ...customerData, pedidoId: orderId });
-  window.open(waLink(message), "_blank");
-
-  cart = [];
-  saveCart();
-  closeOrderForm();
-  document.querySelector("#orderForm").reset();
-  openSuccessModal();
-} finally {
-  submitBtn.disabled = false;
-  submitBtn.textContent = "Confirmar pedido";
-}
-}
 
 function starsText(rating) {
   const full = "★".repeat(rating);
@@ -518,7 +428,9 @@ function openFlavorsModal(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
 
-  const flavors = getProductFlavors(product);
+  const flavors = getProductFlavors(product).sort((a, b) => {
+  return Number(b.stock) - Number(a.stock);
+  });
 
   document.querySelector("#flavorsDetail").innerHTML = `
     <div class="flavors-detail-head">
@@ -580,6 +492,179 @@ function addFlavorToCart(productId, flavorName) {
   closeFlavorsModal();
 }
 
+let currentCheckoutOrder = null;
+
+function openCheckout() {
+  if (!cart.length) {
+    window.open(waLink("Hola Fluxstore, quiero consultar disponibilidad y precios."), "_blank");
+    return;
+  }
+
+  document.querySelector("#checkoutResumeTotal").textContent = money(getCartTotal());
+
+  document.querySelector("#checkoutDataScreen").classList.add("active");
+  document.querySelector("#checkoutPaymentScreen").classList.remove("active");
+
+  document.querySelector("#stepCart").classList.add("done");
+  document.querySelector("#stepCart").classList.remove("active");
+  document.querySelector("#stepData").classList.add("active");
+  document.querySelector("#stepData").classList.remove("done");
+  document.querySelector("#stepPayment").classList.remove("active", "done");
+
+  document.querySelector("#checkoutModal").classList.add("open");
+  document.body.classList.add("modal-open");
+}
+
+function closeCheckout() {
+  document.querySelector("#checkoutModal").classList.remove("open");
+  document.body.classList.remove("modal-open");
+}
+
+function validateCheckoutData(customerData) {
+  if (customerData.nombre.length < 2) {
+    alert("Ingresá tu nombre.");
+    return false;
+  }
+
+  if (customerData.whatsapp.replace(/\D/g, "").length < 8) {
+    alert("Ingresá un WhatsApp válido.");
+    return false;
+  }
+
+  if (!customerData.ciudad) {
+    alert("Elegí tu ciudad.");
+    return false;
+  }
+
+  if (customerData.direccion.length < 3) {
+    alert("Ingresá tu dirección.");
+    return false;
+  }
+
+  if (!customerData.pago) {
+    alert("Elegí una forma de pago.");
+    return false;
+  }
+
+  return true;
+}
+
+async function handleCheckoutSubmit(event) {
+  event.preventDefault();
+
+  const submitBtn = event.target.querySelector("button[type='submit']");
+
+  const customerData = {
+  nombre: document.querySelector("#checkoutName").value.trim(),
+  whatsapp: document.querySelector("#checkoutWhatsapp").value.trim(),
+  ciudad: document.querySelector("#checkoutCity").value,
+  direccion: document.querySelector("#checkoutAddress").value.trim(),
+  horario: document.querySelector("#checkoutTime").value.trim(),
+  observaciones: document.querySelector("#checkoutNotes").value.trim(),
+  pago: document.querySelector("#checkoutPayment").value
+  };
+
+  if (!validateCheckoutData(customerData)) return;
+
+  const orderId = createOrderId();
+
+  const paymentStatus = customerData.pago === "Transferencia"
+  ? "Pendiente de transferencia"
+  : "Pago en efectivo al recibir";
+
+  const orderData = {
+  pedidoId: orderId,
+  nombre: customerData.nombre,
+  whatsapp: customerData.whatsapp,
+  direccion: `${customerData.ciudad} - ${customerData.direccion}`,
+  pago: customerData.pago,
+  horario: customerData.horario,
+  productos: getCartProductsText(),
+  total: money(getCartTotal()),
+  observaciones: `${customerData.observaciones || ""} | Estado de pago: ${paymentStatus}`
+  };
+
+  try {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Registrando pedido...";
+
+    await saveOrderToGoogleSheets(orderData);
+
+    currentCheckoutOrder = {
+      orderData,
+      customerData
+    };
+
+  document.querySelector("#checkoutOrderId").textContent = orderData.pedidoId;
+document.querySelector("#checkoutPaymentTotal").textContent = orderData.total;
+document.querySelector("#checkoutAlias").textContent = PAYMENT_ALIAS;
+document.querySelector("#checkoutHolder").textContent = PAYMENT_HOLDER;
+document.querySelector("#checkoutCvu").textContent = PAYMENT_CVU || "Consultar";
+
+let whatsappMessage = "";
+
+if (customerData.pago === "Transferencia") {
+  whatsappMessage = `Hola Fluxstore, ya realicé la transferencia del pedido ${orderData.pedidoId}.
+
+Total transferido: ${orderData.total}
+Nombre: ${customerData.nombre}
+WhatsApp: ${customerData.whatsapp}
+Ciudad: ${customerData.ciudad}
+Dirección: ${customerData.direccion}
+
+Adjunto comprobante.`;
+
+  document.querySelector("#checkoutPaymentScreen h2").textContent = "Transferencia";
+  document.querySelector("#checkoutPaymentHelp").textContent = "Transferí el total exacto y luego enviá el comprobante por WhatsApp.";
+  document.querySelector(".bank-box").style.display = "block";
+  document.querySelector(".payment-warning p").textContent = "El pedido queda pendiente hasta recibir el comprobante. Una vez confirmado, coordinamos la entrega.";
+  document.querySelector("#checkoutWhatsappReceipt").textContent = "Enviar comprobante por WhatsApp";
+} else {
+  whatsappMessage = `Hola Fluxstore, quiero confirmar el pedido ${orderData.pedidoId}.
+
+Forma de pago: Efectivo
+Total: ${orderData.total}
+Nombre: ${customerData.nombre}
+WhatsApp: ${customerData.whatsapp}
+Ciudad: ${customerData.ciudad}
+Dirección: ${customerData.direccion}
+
+Quedo a la espera para coordinar la entrega.`;
+
+  document.querySelector("#checkoutPaymentScreen h2").textContent = "Pedido registrado";
+  document.querySelector("#checkoutPaymentHelp").textContent = "Tu pedido quedó registrado. Coordinamos la entrega y abonás en efectivo al recibir.";
+  document.querySelector(".bank-box").style.display = "none";
+  document.querySelector(".payment-warning p").textContent = "No necesitás transferir. Contactanos por WhatsApp para coordinar la entrega y el pago en efectivo.";
+  document.querySelector("#checkoutWhatsappReceipt").textContent = "Coordinar por WhatsApp";
+}
+
+  document.querySelector("#checkoutWhatsappReceipt").href = waLink(whatsappMessage);
+
+  document.querySelector("#checkoutDataScreen").classList.remove("active");
+  document.querySelector("#checkoutPaymentScreen").classList.add("active");
+
+  document.querySelector("#stepData").classList.remove("active");
+  document.querySelector("#stepData").classList.add("done");
+  document.querySelector("#stepPayment").classList.add("active");
+
+cart = [];
+saveCart();
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Continuar al pago";
+  }
+}
+
+async function copyCheckoutAlias() {
+  await navigator.clipboard.writeText(PAYMENT_ALIAS);
+
+  const btn = document.querySelector("#copyCheckoutAlias");
+  btn.textContent = "Alias copiado";
+  setTimeout(() => {
+    btn.textContent = "Copiar alias";
+  }, 1800);
+}
+
 function setup() {
   renderProducts();
   renderPrices();
@@ -595,46 +680,50 @@ function setup() {
     });
   });
 
-  document.querySelector("#cartToggle").addEventListener("click", () => document.querySelector("#cart").classList.toggle("open"));
-  document.querySelector("#clearCart").addEventListener("click", () => { cart = []; saveCart(); });
-  document.querySelector("#menuBtn").addEventListener("click", () => document.querySelector("#navLinks").classList.toggle("open"));
+  document.querySelector("#cartToggle").addEventListener("click", () => {
+    document.querySelector("#cart").classList.toggle("open");
+  });
 
-  document.querySelector("#orderForm").addEventListener("submit", handleOrderSubmit);
+  document.querySelector("#clearCart").addEventListener("click", () => {
+    cart = [];
+    saveCart();
+  });
+
+  document.querySelector("#menuBtn").addEventListener("click", () => {
+    document.querySelector("#navLinks").classList.toggle("open");
+  });
+
   document.querySelector("#reviewForm").addEventListener("submit", handleReviewSubmit);
-  document.querySelector("#closeOrderForm").addEventListener("click", closeOrderForm);
-  document.querySelector("#orderModal").addEventListener("click", event => {
-  if (event.target.id === "orderModal") closeOrderForm();
-});
 
-document.querySelector("#closeFlavorsModal").addEventListener("click", closeFlavorsModal);
-document.querySelector("#flavorsModal").addEventListener("click", event => {
-  if (event.target.id === "flavorsModal") closeFlavorsModal();
-});
+  document.querySelector("#closeFlavorsModal").addEventListener("click", closeFlavorsModal);
 
-  document.querySelector("#closeSuccess").addEventListener("click", closeSuccessModal);
-  document.querySelector("#successModal").addEventListener("click", event => {
-  if (event.target.id === "successModal") closeSuccessModal();
-});
+  document.querySelector("#flavorsModal").addEventListener("click", event => {
+    if (event.target.id === "flavorsModal") closeFlavorsModal();
+  });
+
+  document.querySelector("#checkoutForm").addEventListener("submit", handleCheckoutSubmit);
+
+  document.querySelector("#closeCheckout").addEventListener("click", closeCheckout);
+
+  document.querySelector("#checkoutModal").addEventListener("click", event => {
+    if (event.target.id === "checkoutModal") closeCheckout();
+  });
+
+document.querySelector("#copyCheckoutAlias").addEventListener("click", copyCheckoutAlias);
 
   const genericText = "Hola Fluxstore, quiero consultar por vapers disponibles.";
   document.querySelector("#heroWhatsapp").href = waLink(genericText);
   document.querySelector("#contactWhatsapp").href = waLink(genericText);
 
   document.querySelector("#heroWhatsapp").addEventListener("click", () => {
-  trackClick("WhatsApp hero", "Consulta general");
-});
+    trackClick("WhatsApp hero", "Consulta general");
+  });
 
-document.querySelector("#contactWhatsapp").addEventListener("click", () => {
-  trackClick("WhatsApp contacto", "Consulta general");
-});
-
-  /*const ageGate = document.querySelector("#ageGate");
-  if (localStorage.getItem("fluxstoreAdult") === "yes") ageGate.classList.add("hidden");
-  document.querySelector("#enterSite").addEventListener("click", () => {
-    localStorage.setItem("fluxstoreAdult", "yes");
-    ageGate.classList.add("hidden");
-  });*/
+  document.querySelector("#contactWhatsapp").addEventListener("click", () => {
+    trackClick("WhatsApp contacto", "Consulta general");
+  });
 }
+
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;

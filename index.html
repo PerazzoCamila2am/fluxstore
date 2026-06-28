@@ -5,36 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Fluxstore Rosario - catálogo de vapers con pedidos por WhatsApp." />
   <title>Fluxstore | Vapers en Rosario</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
   <link rel="icon" href="assets/fluxstore-logo-circle.png">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <!--<div class="age-gate" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
-    <div class="age-card">
-      <span class="badge">+18</span>
-      <h1 id="ageTitle">Fluxstore es solo para mayores de edad</h1>
-      <p>Este sitio exhibe productos de vapeo. Confirmá que sos mayor de 18 años para continuar.</p>
-      <div class="age-actions">
-        <button class="btn primary" id="enterSite">Soy mayor de 18</button>
-        <a class="btn ghost" href="https://www.google.com">Salir</a>
-      </div>
-    </div>
-  </div> -->
 
+<body>
   <header class="site-header">
     <nav class="nav wrap">
       <a class="brand" href="#inicio" aria-label="Inicio Fluxstore">
         <img class="brand-logo" src="assets/fluxstore-logo-circle.png" alt="Fluxstore logo">
         <span>Fluxstore</span>
       </a>
+
       <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+
       <div class="nav-links" id="navLinks">
         <a href="#catalogo">Catálogo</a>
         <a href="#precios">Precios</a>
-        <a href="#envios">Envíos</a>
+        <a href="#resenas">Reseñas</a>
         <a href="#contacto">Contacto</a>
       </div>
     </nav>
@@ -45,31 +38,44 @@
       <div class="hero-copy">
         <p class="eyebrow">Vapers en Rosario · pedidos por WhatsApp</p>
         <h1>Los vapes más elegidos, promos y compra rápida.</h1>
+
         <div class="hero-actions">
           <a class="btn primary" href="#catalogo">Ver catálogo</a>
           <a class="btn whatsapp" id="heroWhatsapp" href="#">Pedir por WhatsApp</a>
         </div>
+
         <div class="trust-row" aria-label="Beneficios">
           <span>🚚 Envíos en el día</span>
           <span>💸 Efectivo / transferencia</span>
           <span>📍 Rosario</span>
         </div>
       </div>
+
       <div class="hero-visual">
         <img src="assets/luffbar-55k.jpeg" alt="Promoción Luffbar 55K Fluxstore" />
-        <div class="float-price"><strong>55K</strong><span>$25.990</span></div>
+        <div class="float-price">
+          <strong>55K</strong>
+          <span>$25.990</span>
+        </div>
       </div>
     </section>
 
     <section class="ticker" aria-label="Marcas disponibles">
-      <div><span>LUFFBAR</span><span>ELFBAR</span><span>LOST MARY</span><span>IGNITE ICE</span><span>RABBEATS</span><span>ROSARIO</span></div>
+      <div>
+        <span>LUFFBAR</span>
+        <span>ELFBAR</span>
+        <span>LOST MARY</span>
+        <span>IGNITE ICE</span>
+        <span>RABBEATS</span>
+        <span>ROSARIO</span>
+      </div>
     </section>
 
     <section class="wrap section" id="catalogo">
       <div class="section-head">
         <p class="eyebrow">Catálogo</p>
         <h2>Elegí tu modelo</h2>
-        <p>Filtrá por puffs y agregá productos para enviar el pedido directo a WhatsApp.</p>
+        <p>Filtrá por puffs, entrá al producto, elegí sabor y agregalo al carrito.</p>
       </div>
 
       <div class="filters" role="list" aria-label="Filtros de catálogo">
@@ -77,85 +83,74 @@
         <button class="chip" data-filter="55k">55K</button>
         <button class="chip" data-filter="50k">50K</button>
         <button class="chip" data-filter="40k">40K</button>
-        <button class="chip" data-filter="30k">30k</button>
+        <button class="chip" data-filter="30k">30K</button>
         <button class="chip" data-filter="20k">20K</button>
       </div>
 
       <div class="product-grid" id="productGrid"></div>
     </section>
 
-   
-
     <section class="wrap section" id="precios">
       <div class="section-head">
         <p class="eyebrow">Lista rápida</p>
         <h2>Precios destacados</h2>
       </div>
+
       <div class="price-table" id="priceTable"></div>
     </section>
 
-    <section class="wrap section split" id="envios">
-      <div>
-        <p class="eyebrow">Cómo comprar</p>
-        <h2>Pedido simple en 3 pasos</h2>
-      </div>
-      <div class="steps">
-        <article><span>1</span><h3>Elegí el vape</h3><p>Mirás modelo, precio y sabores disponibles.</p></article>
-        <article><span>2</span><h3>Armá el pedido</h3><p>Agregás al carrito y tocás WhatsApp.</p></article>
-        <article><span>3</span><h3>Coordinás entrega</h3><p>Confirmás zona, medio de pago y horario.</p></article>
-      </div>
-    </section>
 
     <section class="wrap section reviews-section" id="resenas">
-  <div class="reviews-head">
-    <div>
-      <p class="eyebrow">Reseñas</p>
-      <h2>Experiencias Fluxstore</h2>
-      <p>Dejá tu calificación y contanos cómo fue tu experiencia.</p>
-    </div>
+      <div class="reviews-head">
+        <div>
+          <p class="eyebrow">Reseñas</p>
+          <h2>Experiencias Fluxstore</h2>
+          <p>Dejá tu calificación y contanos cómo fue tu experiencia.</p>
+        </div>
 
-    <div class="rating-summary">
-      <strong id="averageRating">5.0</strong>
-      <span id="averageStars">★★★★★</span>
-      <small id="reviewCount">0 reseñas</small>
-    </div>
-  </div>
+        <div class="rating-summary">
+          <strong id="averageRating">5.0</strong>
+          <span id="averageStars">★★★★★</span>
+          <small id="reviewCount">0 reseñas</small>
+        </div>
+      </div>
 
-  <div class="reviews-grid" id="reviewsGrid">
-    <article class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p>Cargando reseñas...</p>
-      <strong>Fluxstore</strong>
-    </article>
-  </div>
+      <div class="reviews-grid" id="reviewsGrid">
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>Cargando reseñas...</p>
+          <strong>Fluxstore</strong>
+        </article>
+      </div>
 
-  <form class="review-form" id="reviewForm">
-    <h3>Dejar una reseña</h3>
+      <form class="review-form" id="reviewForm">
+        <h3>Dejar una reseña</h3>
 
-    <label>
-  Tu nombre
-  <input type="text" id="reviewName" placeholder="Tu nombre">
-</label>
+        <label>
+          Tu nombre
+          <input type="text" id="reviewName" placeholder="Tu nombre">
+        </label>
 
-<label>
-  Calificación
-  <div class="star-picker" id="starPicker" aria-label="Elegir calificación">
-    <button type="button" class="star-btn active" data-rating="1">★</button>
-    <button type="button" class="star-btn active" data-rating="2">★</button>
-    <button type="button" class="star-btn active" data-rating="3">★</button>
-    <button type="button" class="star-btn active" data-rating="4">★</button>
-    <button type="button" class="star-btn active" data-rating="5">★</button>
-  </div>
-  <input type="hidden" id="reviewRating" value="5">
-</label>
+        <label>
+          Calificación
+          <div class="star-picker" id="starPicker" aria-label="Elegir calificación">
+            <button type="button" class="star-btn active" data-rating="1">★</button>
+            <button type="button" class="star-btn active" data-rating="2">★</button>
+            <button type="button" class="star-btn active" data-rating="3">★</button>
+            <button type="button" class="star-btn active" data-rating="4">★</button>
+            <button type="button" class="star-btn active" data-rating="5">★</button>
+          </div>
+          <input type="hidden" id="reviewRating" value="5">
+        </label>
 
-<label>
-  Comentario opcional
-  <textarea id="reviewComment" placeholder="Podés dejar un comentario o solo enviar estrellas"></textarea>
-</label>
-    <button class="btn primary full" type="submit">Publicar reseña</button>
-  </form>
-  </section>
+        <label>
+          Comentario opcional
+          <textarea id="reviewComment" placeholder="Podés dejar un comentario o solo enviar estrellas"></textarea>
+        </label>
+
+        <button class="btn primary full" type="submit">Publicar reseña</button>
+      </form>
+    </section>
 
     <section class="wrap section contact-card" id="contacto">
       <p class="eyebrow">Contacto</p>
@@ -168,93 +163,174 @@
 
   <aside class="cart" id="cart" aria-label="Carrito">
     <button class="cart-toggle" id="cartToggle">🛒 <span id="cartCount">0</span></button>
+
     <div class="cart-panel" id="cartPanel">
       <div class="cart-head">
         <h2>Tu pedido</h2>
         <button id="clearCart">Vaciar</button>
       </div>
+
       <div id="cartItems" class="cart-items"></div>
-      <div class="cart-total"><span>Total estimado</span><strong id="cartTotal">$0</strong></div>
+
+      <div class="cart-total">
+        <span>Total estimado</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+
       <a class="btn whatsapp full" id="sendOrder" href="#">Enviar pedido</a>
     </div>
   </aside>
-  <section class="order-modal" id="orderModal">
-  <div class="order-box">
-    <button class="order-close" id="closeOrderForm" type="button">×</button>
 
-    <p class="eyebrow">Finalizar pedido</p>
-    <h2>Datos para coordinar</h2>
-    <p class="order-help">Completá tus datos y te abrimos WhatsApp con el pedido listo.</p>
+  <section class="checkout-modal" id="checkoutModal">
+  <div class="checkout-box">
+    <button class="checkout-close" id="closeCheckout" type="button">×</button>
 
-    <form id="orderForm" class="order-form">
-      <label>
-        Nombre
-        <input type="text" id="customerName" placeholder="Ej: Camila" required>
-      </label>
+    <div class="checkout-steps">
+      <span class="active" id="stepCart">1 Carrito</span>
+      <span id="stepData">2 Datos</span>
+      <span id="stepPayment">3 Confirmación</span>
+    </div>
 
-      <label>
-        WhatsApp
-        <input type="tel" id="customerWhatsapp" placeholder="Ej: 3415907913" required>
-      </label>
+    <div class="checkout-screen active" id="checkoutDataScreen">
+      <p class="eyebrow">Finalizar compra</p>
+      <h2>Datos del pedido</h2>
+      <p class="checkout-help">Completá tus datos para registrar el pedido.</p>
 
-      <label>
-        Dirección o barrio
-        <input type="text" id="customerAddress" placeholder="Ej: Centro / Pellegrini y Mitre" required>
-      </label>
+      <form class="checkout-form" id="checkoutForm">
+        <label>
+          Nombre
+          <input type="text" id="checkoutName" placeholder="Tu nombre" required>
+        </label>
 
-      <label>
-        Forma de pago
-        <select id="customerPayment" required>
-          <option value="">Elegir opción</option>
-          <option value="Efectivo">Efectivo</option>
-          <option value="Transferencia">Transferencia</option>
-        </select>
-        
-        
-      </label>
+        <label>
+          WhatsApp
+          <input type="tel" id="checkoutWhatsapp" placeholder="Ej: 3415907913" required>
+        </label>
 
-      <label>
-        Horario preferido
-        <input type="text" id="customerTime" placeholder="Ej: Después de las 18 hs">
-      </label>
+        <label>
+          Ciudad
+          <select id="checkoutCity" required>
+            <option value="">Elegir ciudad</option>
+            <option value="Rosario">Rosario</option>
+            <option value="Villa Gobernador Gálvez">Villa Gobernador Gálvez</option>
+          </select>
+        </label>
 
-      <label>
-        Observaciones
-        <textarea id="customerNotes" placeholder="Ej: Consultar sabores disponibles"></textarea>
-      </label>
+        <label>
+          Dirección
+          <input type="text" id="checkoutAddress" placeholder="Ej: Necochea 2895" required>
+        </label>
 
-      <button class="btn whatsapp full" type="submit">Confirmar pedido</button>
-    </form>
+        <label>
+          Forma de Pago
+          <select  id="checkoutPayment" required>
+            <option value="">Elegir forma de pago</option>
+            <option value="Transferencia">Transferencia</option>
+            <option value="Efectivo">Efectivo</option>
+          </select>
+        </label>
+
+        <label>
+          Horario preferido
+          <input type="text" id="checkoutTime" placeholder="Ej: Después de las 18 hs">
+        </label>
+
+        <label>
+          Observaciones
+          <textarea id="checkoutNotes" placeholder="Ej: Timbre, piso, referencia o aclaración"></textarea>
+        </label>
+
+        <div class="checkout-resume">
+          <span>Total</span>
+          <strong id="checkoutResumeTotal">$0</strong>
+        </div>
+
+        <button class="btn primary full" type="submit">Continuar al pago</button>
+      </form>
+    </div>
+
+    <div class="checkout-screen" id="checkoutPaymentScreen">
+      <p class="eyebrow">Pedido registrado</p>
+      <h2>Transferencia</h2>
+      <p class="checkout-help" id="checkoutPaymentHelp">
+        Revisá los datos del pedido para finalizar la compra.
+      </p>
+      <div class="payment-summary">
+        <div>
+          <small>Número de pedido</small>
+          <strong id="checkoutOrderId">FX-0000</strong>
+        </div>
+
+        <div>
+          <small>Total a transferir</small>
+          <strong id="checkoutPaymentTotal">$0</strong>
+        </div>
+      </div>
+
+      <div class="bank-box">
+        <h3>Datos para transferir</h3>
+
+        <div class="bank-row">
+          <span>Alias</span>
+          <strong id="checkoutAlias">TU.ALIAS</strong>
+        </div>
+
+        <div class="bank-row">
+          <span>Titular</span>
+          <strong id="checkoutHolder">Titular</strong>
+        </div>
+
+        <div class="bank-row">
+          <span>CVU / CBU</span>
+          <strong id="checkoutCvu">Consultar</strong>
+        </div>
+
+        <button class="btn primary full" id="copyCheckoutAlias" type="button">Copiar alias</button>
+      </div>
+
+      <div class="payment-warning">
+        <strong>Importante</strong>
+        <p>El pedido queda pendiente hasta recibir el comprobante. Una vez confirmado, coordinamos la entrega.</p>
+      </div>
+
+      <a class="btn whatsapp full" id="checkoutWhatsappReceipt" target="_blank">
+        Enviar comprobante por WhatsApp
+      </a>
+    </div>
   </div>
-</section>
-<section class="success-modal" id="successModal">
-  <div class="success-box">
-    <span class="success-icon">✓</span>
-    <p class="eyebrow">Pedido registrado</p>
-    <h2>¡Gracias por tu pedido!</h2>
-    <p>Te abrimos WhatsApp para confirmar disponibilidad, sabores y envío.</p>
-    <button class="btn primary full" id="closeSuccess" type="button">Entendido</button>
-  </div>
-</section>
+  </section>
+
+
+
   <section class="flavors-modal" id="flavorsModal">
-  <div class="flavors-modal-box">
-    <button class="flavors-modal-close" id="closeFlavorsModal" type="button">×</button>
-    <div id="flavorsDetail"></div>
-  </div>
+    <div class="flavors-modal-box">
+      <button class="flavors-modal-close" id="closeFlavorsModal" type="button">×</button>
+      <div id="flavorsDetail"></div>
+    </div>
   </section>
 
   <footer class="footer">
     <div class="wrap footer-grid">
-      
-      <div><a href="#catalogo">Catálogo</a><a href="#precios">Precios</a><a href="#contacto">WhatsApp</a></div>
+      <div>
+        <strong>Fluxstore</strong>
+        <p>Vapers en Rosario · pedidos por WhatsApp</p>
+      </div>
+
+      <div>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#precios">Precios</a>
+        <a href="#resenas">Reseñas</a>
+        <a href="#contacto">WhatsApp</a>
+      </div>
     </div>
-    <p>Los sabores pueden variar según stock. Consultá disponibilidad al momento de pedir.</p>
+
+    <p class="wrap legal">Los sabores pueden variar según stock. Consultá disponibilidad al momento de pedir.</p>
   </footer>
 
   <script src="script.js"></script>
 
   <a class="floating-whatsapp" href="https://wa.me/5493415907913" target="_blank" aria-label="WhatsApp Fluxstore">
-  WhatsApp
-</a>
+    WhatsApp
+  </a>
 </body>
 </html>
