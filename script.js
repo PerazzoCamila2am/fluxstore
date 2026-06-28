@@ -9,7 +9,14 @@ const products = [
     puffs: "55k",
     price: 26990,
     image: "assets/luffbar-55k.png",
-    flavors: "Fruity Cool Dragonfruit, Alaska Ice, Straw Nana, Grape Menthol, Grape Slushy"
+    flavors: "Fruity Cool Dragonfruit, Alaska Ice, Straw Nana, Grape Menthol, Grape Slushy",
+    flavorOptions: [
+      { name: "Fruity Cool Dragonfruit", image: "assets/luffbar-fruity-cool-dragonfruit.jpeg",  stock: true },
+      { name: "Alaska Ice", image: "assets/luffbar-alaska-ice.jpeg",  stock: true },
+      { name: "Straw Nana", image: "assets/luffbar-straw-nana.jpeg",  stock: true},
+      { name: "Grape Menthol", image: "assets/luffbar-fruity-cool-grape-menthol.jpeg",  stock: true},
+      { name: "Grape Slushy", image: "assets/luffbar-grape-slushy.jpeg",  stock: true}
+    ]
   },
   {
     id: "rabbeats-50k",
@@ -17,7 +24,17 @@ const products = [
     puffs: "50k",
     price: 24990,
     image: "assets/rabbeats-50k.png",
-    flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice"
+    flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice, Menthol, Sakura Grape",
+    flavorOptions: [
+      { name: "Icy Mint", image: "assets/rabbeats-icy-mint.jpeg",  stock: false},
+      { name: "Blueberry Lemon", image: "assets/rabbeats-blueberry-lemon.jpeg",  stock: false},
+      { name: "Strawberry Ice", image: "assets/rabbeats-strawberry-ice.jpeg",  stock: false},
+      { name: "Pineapple Ice", image: "assets/rabbeats-pineapple-ice.jpeg",  stock: true},
+      { name: "Fanta Strawberry", image: "assets/rabbeats-fanta-strawberry.jpeg",  stock: true},
+      { name: "Banana Ice", image: "assets/rabbeats-banana-ice.jpeg",  stock: true},
+      { name: "Menthol", image: "assets/rabbeats-menthol.jpeg",  stock: false},
+      { name: "Sakura Grape", image: "assets/rabbeats-sakura-grape.jpeg",  stock: false},
+    ]
   },
   {
     id: "elfbar-ice-40k",
@@ -25,7 +42,16 @@ const products = [
     puffs: "40k",
     price: 24990,
     image: "assets/elfbar-ice-40k.png",
-    flavors: "Baja Splash, Peach Blue Slush, Strawberry Watermelon, Hawaiian Slush"
+    flavors: "Baja Splash, Peach Blue Slush, Strawberry Watermelon, Hawaiian Slush, Black Mint, Cherry Fuse, Miami Mint",
+    flavorOptions: [
+      { name: "Baja Splash", image: "assets/elfbar-baja-splash.jpeg",  stock: true},
+      { name: "Peach Blue Slush", image: "assets/elfbar-peach-blue-slush.jpeg",  stock: true},
+      { name: "Strawberry Watermelon", image: "assets/elfbar-strawberry-watermelon.jpeg",  stock: true},
+      { name: "Hawaiian Slush", image: "assets/elfbar-hawaiian-slush.jpeg",  stock: true},
+      { name: "Black Mint", image: "assets/elfbar-black-mint.jpeg",  stock: true},
+      { name: "Cherry Fuse", image: "assets/elfbar-cherry-fuse.jpeg",  stock: true},
+      { name: "Miami Mint", image: "assets/elfbar-miami-mint.jpeg",  stock: true}
+    ]
   },
   {
     id: "ignite-ice-40k",
@@ -35,7 +61,16 @@ const products = [
     /*oldPrice: 30000,
     discount: "15% OFF",*/
     image: "assets/ignite-ice-40k.png",
-    flavors: "Strawberry, Mint, Grape, Peach Berry Ice, Strawberry Watermelon, Banana Cherry, Watermelon Ice"
+    flavors: "Strawberry, Mint, Grape, Peach Berry Ice, Strawberry Watermelon, Banana Cherry, Watermelon Ice",
+    flavorOptions: [
+      { name: "Strawberry", image: "assets/ignite-strawberry.jpeg",  stock: false},
+      { name: "Mint", image: "assets/ignite-ice-mint.jpeg",  stock: true},
+      { name: "Grape", image: "assets/ignite-grape.jpeg",  stock: false},
+      { name: "Peach Berry Ice", image: "assets/ignite-peach-berry-ice.jpeg",  stock: true},
+      { name: "Strawberry Watermelon", image: "assets/ignite-strawberry-watermelon.jpeg",  stock: true},
+      { name: "Banana Cherry", image: "assets/ignite-banana-cherry.jpeg",  stock: true},
+      { name: "Watermelon Ice", image: "assets/ignite-watermelon-ice.jpeg",  stock: true}
+    ]
   },
 
   {
@@ -47,7 +82,14 @@ const products = [
     promoPrice: 41990,
     promoText: "Llevando 2: $41.990",
     image: "assets/wefume-30k.png",
-    flavors: "Strawberry Kiwi, Lush Ice, Apple Pineapple, Miami Mix, Ice Mint"
+    flavors: "Strawberry Kiwi, Lush Ice, Apple Pineapple, Miami Mix, Ice Mint",
+    flavorOptions: [
+      { name: "Strawberry Kiwi", image: "assets/wefume-strawberry-kiwi.jpeg",  stock: false},
+      { name: "Lush Ice", image: "assets/wefume-lush-ice.jpeg",  stock: true},
+      { name: "Apple Pineapple", image: "assets/wefume-apple-pineapple.jpeg",  stock: true},
+      { name: "Miami Mix", image: "assets/wefume-miami-mix.jpeg",  stock: true},
+      { name: "Ice Mint", image: "assets/wefume-ice-mint.jpeg",  stock: true}
+    ]
   },
 
   {
@@ -56,7 +98,10 @@ const products = [
     puffs: "20k",
     price: 17990,
     image: "assets/lost-mary-20k.png",
-    flavors: "Ice Mint y consultar sabores disponibles",
+    flavors: "Ice Mint",
+    flavorOptions: [
+      { name: "Ice Mint", image: "assets/lostmary-ice-mint.jpeg"}
+    ],
     soldOut: true
   }
 ];
@@ -101,9 +146,9 @@ function renderProducts(filter = "all") {
 
         <div class="product-actions">
           ${p.soldOut
-  ? `<button class="btn disabled" disabled>Agotado</button>`
-  : `<button class="btn" onclick="addToCart('${p.id}')">Agregar</button>`
-}
+         ? `<button class="btn disabled" disabled>Agotado</button>`
+        : `<button class="btn" onclick="openFlavorsModal('${p.id}')">Ver sabores</button>`
+        }
            <a 
             class="btn ghost" 
             href="${waLink(`Hola Fluxstore, quiero consultar por ${p.name}. ¿Qué sabores tenés disponibles?`)}" 
@@ -131,20 +176,32 @@ function renderPrices() {
   `).join("");
 }
 
-function addToCart(id) {
+function addToCart(id, flavor = "") {
   const item = products.find(p => p.id === id);
-  const found = cart.find(p => p.id === id);
-  if (found) found.qty += 1;
-  else cart.push({ ...item, qty: 1 });
+  if (!item || item.soldOut) return;
+
+  const cartId = flavor ? `${id}-${flavor}` : id;
+  const found = cart.find(p => p.cartId === cartId);
+
+  if (found) {
+    found.qty += 1;
+  } else {
+    cart.push({
+      ...item,
+      cartId,
+      selectedFlavor: flavor,
+      qty: 1
+    });
+  }
+
   saveCart();
   document.querySelector("#cart").classList.add("open");
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(p => p.id !== id);
+function removeFromCart(cartId) {
+  cart = cart.filter(p => (p.cartId || p.id) !== cartId);
   saveCart();
 }
-
 function saveCart() {
   localStorage.setItem("fluxstoreCart", JSON.stringify(cart));
   renderCart();
@@ -161,12 +218,13 @@ function renderCart() {
     <div class="cart-item">
       <div>
   <strong>${item.name}</strong><br>
+  ${item.selectedFlavor ? `<small>Sabor: ${item.selectedFlavor}</small><br>` : ""}
   <small>
     ${item.qty} x ${money(item.price)}
     ${item.promoQty && item.qty >= item.promoQty ? `<br>Promo aplicada: ${item.promoQty} x ${money(item.promoPrice)}` : ""}
   </small>
 </div>
-      <button class="chip" onclick="removeFromCart('${item.id}')">×</button>
+      <button class="chip" onclick="removeFromCart('${item.cartId || item.id}')">×</button>
     </div>
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
 
@@ -183,7 +241,7 @@ function getCartProductsText() {
   return cart.map(i => {
   const promoApplied = i.promoQty && i.qty >= i.promoQty;
   const promoText = promoApplied ? ` promo ${i.promoQty} x ${money(i.promoPrice)}` : "";
-  return `${i.qty} x ${i.name} - ${money(getItemSubtotal(i))}${promoText}`;
+  return `${i.qty} x ${i.name}${i.selectedFlavor ? ` (${i.selectedFlavor})` : ""} - ${money(getItemSubtotal(i))}${promoText}`;
 }).join(" | ");
 }
 
@@ -202,7 +260,7 @@ function getCartWhatsappText(customerData) {
 ${cart.map(i => {
   const promoApplied = i.promoQty && i.qty >= i.promoQty;
   const promoText = promoApplied ? ` promo aplicada (${i.promoQty} x ${money(i.promoPrice)})` : "";
-  return `• ${i.qty} x ${i.name} - ${money(getItemSubtotal(i))}${promoText}`;
+  return `• ${i.qty} x ${i.name}${i.selectedFlavor ? ` (${i.selectedFlavor})` : ""} - ${money(getItemSubtotal(i))}${promoText}`;
 }).join("\n")}
 
 Total estimado: ${money(total)}
@@ -442,6 +500,85 @@ async function handleReviewSubmit(event) {
   }, 1200);
   }
 
+  function getProductFlavors(product) {
+  if (product.flavorOptions && product.flavorOptions.length) {
+    return product.flavorOptions.map(flavor => ({
+      ...flavor,
+      stock: flavor.stock !== false
+    }));
+  }
+
+  return product.flavors.split(",").map(flavor => ({
+    name: flavor.trim(),
+    image: product.image,
+    stock: true
+  }));
+  }
+function openFlavorsModal(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+
+  const flavors = getProductFlavors(product);
+
+  document.querySelector("#flavorsDetail").innerHTML = `
+    <div class="flavors-detail-head">
+      <span class="puffs">${product.puffs.toUpperCase()} PUFFS</span>
+      <h2>${product.name}</h2>
+      <p>Elegí el sabor que querés agregar al carrito. Confirmamos stock por WhatsApp antes del envío.</p>
+
+      <div class="detail-price">
+        ${product.oldPrice ? `<small>${money(product.oldPrice)}</small>` : ""}
+        <strong>${money(product.price)}</strong>
+      </div>
+
+      ${product.promoText ? `<div class="promo-badge">${product.promoText}</div>` : ""}
+    </div>
+
+    <div class="flavor-gallery">
+      ${flavors.map(flavor => `
+  <article class="flavor-card ${flavor.stock ? "" : "flavor-out"}">
+    <div class="flavor-card-img">
+      ${flavor.stock ? "" : `<span class="flavor-stock-badge">Sin stock</span>`}
+      <img src="${flavor.image}" alt="${product.name} ${flavor.name}">
+    </div>
+
+    <div class="flavor-card-body">
+      <h3>${flavor.name}</h3>
+      <p>${product.name}</p>
+
+      ${flavor.stock
+        ? `<button class="btn full" onclick="addFlavorToCart('${product.id}', '${flavor.name.replace(/'/g, "\\'")}')">
+            Agregar
+          </button>`
+        : `<button class="btn full disabled" disabled>Sin stock</button>`
+      }
+
+      <a 
+        class="btn ghost full"
+        href="${waLink(`Hola Fluxstore, quiero consultar por ${product.name} sabor ${flavor.name}. ¿Vuelve a ingresar stock?`)}"
+        target="_blank"
+        onclick="trackClick('Consultar sabor sin stock', '${product.name} - ${flavor.name}')"
+      >
+        Consultar
+      </a>
+    </div>
+  </article>
+  `).join("")}
+    </div>
+  `;
+
+  document.querySelector("#flavorsModal").classList.add("open");
+}
+
+function closeFlavorsModal() {
+  document.querySelector("#flavorsModal").classList.remove("open");
+}
+
+function addFlavorToCart(productId, flavorName) {
+  addToCart(productId, flavorName);
+  closeFlavorsModal();
+}
+
 function setup() {
   renderProducts();
   renderPrices();
@@ -466,6 +603,11 @@ function setup() {
   document.querySelector("#closeOrderForm").addEventListener("click", closeOrderForm);
   document.querySelector("#orderModal").addEventListener("click", event => {
   if (event.target.id === "orderModal") closeOrderForm();
+});
+
+document.querySelector("#closeFlavorsModal").addEventListener("click", closeFlavorsModal);
+document.querySelector("#flavorsModal").addEventListener("click", event => {
+  if (event.target.id === "flavorsModal") closeFlavorsModal();
 });
 
   document.querySelector("#closeSuccess").addEventListener("click", closeSuccessModal);
@@ -496,6 +638,8 @@ document.querySelector("#contactWhatsapp").addEventListener("click", () => {
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 window.trackClick = trackClick;
+window.openFlavorsModal = openFlavorsModal;
+window.addFlavorToCart = addFlavorToCart;
 document.addEventListener("DOMContentLoaded", setup);
 
 async function saveOrderToGoogleSheets(orderData) {

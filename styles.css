@@ -636,3 +636,164 @@ a{color:inherit;text-decoration:none} img{max-width:100%;display:block} button{f
     font-size: 1.85rem;
   }
 }
+
+
+.flavors-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: none;
+  place-items: center;
+  background: rgba(0, 0, 0, .84);
+  backdrop-filter: blur(14px);
+  padding: 18px;
+}
+
+.flavors-modal.open {
+  display: grid;
+}
+
+.flavors-modal-box {
+  width: min(1100px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035)), var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.flavors-modal-close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,.55);
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.flavors-detail-head {
+  margin-bottom: 22px;
+}
+
+.flavors-detail-head h2 {
+  font-family: "Bebas Neue", Inter, sans-serif;
+  font-size: clamp(3rem, 9vw, 5.8rem);
+  line-height: .85;
+  margin: 12px 0;
+}
+
+.flavors-detail-head p {
+  color: var(--muted);
+  max-width: 680px;
+  line-height: 1.5;
+}
+
+.flavor-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.flavor-card {
+  overflow: hidden;
+  border-radius: 24px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 22px rgba(0,0,0,.22);
+}
+
+.flavor-card-img {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at center, rgba(20,244,255,.12), rgba(0,0,0,.35));
+  padding: 12px;
+}
+
+.flavor-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.flavor-card-body {
+  padding: 16px;
+}
+
+.flavor-card-body h3 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.flavor-card-body p {
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+.flavor-card-body .full {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.flavor-card-body .ghost {
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+@media (max-width: 850px) {
+  .flavor-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .flavors-modal-box {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .flavor-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+.flavor-card-img {
+  position: relative;
+}
+
+.flavor-out {
+  opacity: 0.68;
+}
+
+.flavor-out img {
+  filter: grayscale(0.85) brightness(0.65);
+}
+
+.flavor-stock-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(255, 0, 90, 0.92);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 18px rgba(255, 0, 90, 0.45);
+}
