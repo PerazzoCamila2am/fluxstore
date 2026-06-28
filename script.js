@@ -567,10 +567,12 @@ function openFlavorsModal(productId) {
   `;
 
   document.querySelector("#flavorsModal").classList.add("open");
+  document.body.classList.add("modal-open");
 }
 
 function closeFlavorsModal() {
   document.querySelector("#flavorsModal").classList.remove("open");
+  document.body.classList.remove("modal-open");
 }
 
 function addFlavorToCart(productId, flavorName) {
