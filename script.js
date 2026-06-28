@@ -524,7 +524,6 @@ function openFlavorsModal(productId) {
     <div class="flavors-detail-head">
       <span class="puffs">${product.puffs.toUpperCase()} PUFFS</span>
       <h2>${product.name}</h2>
-      <p>Elegí el sabor que querés agregar al carrito. Confirmamos stock por WhatsApp antes del envío.</p>
 
       <div class="detail-price">
         ${product.oldPrice ? `<small>${money(product.oldPrice)}</small>` : ""}
