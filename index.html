@@ -173,7 +173,7 @@
       <div id="cartItems" class="cart-items"></div>
 
       <div class="cart-total">
-        <span>Total estimado</span>
+        <span>Total con envío</span>
         <strong id="cartTotal">$0</strong>
       </div>
 
@@ -240,10 +240,20 @@
           <textarea id="checkoutNotes" placeholder="Ej: Timbre, piso, referencia o aclaración"></textarea>
         </label>
 
-        <div class="checkout-resume">
+        <div class="checkout-resume-list">
+          <div>
+            <span>Productos</span>
+            <strong id="checkoutProductsTotal">$0</strong>
+          </div>
+          <div>
+            <span>Envío</span>
+            <strong>$4.000</strong>
+          </div>
+          <div class="checkout-resume-total">
           <span>Total</span>
           <strong id="checkoutResumeTotal">$0</strong>
         </div>
+      </div>
 
         <button class="btn primary full" type="submit">Continuar al pago</button>
       </form>

@@ -1243,3 +1243,38 @@ body.modal-open {
     gap: 4px;
   }
 }
+
+.checkout-resume-list {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+}
+
+.checkout-resume-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.checkout-resume-list span {
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.checkout-resume-list strong {
+  color: var(--text);
+}
+
+.checkout-resume-total {
+  border-top: 1px solid rgba(255,255,255,.12);
+  padding-top: 10px;
+}
+
+.checkout-resume-total strong {
+  color: var(--cyan);
+  font-size: 1.35rem;
+}

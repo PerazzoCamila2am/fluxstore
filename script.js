@@ -1,5 +1,6 @@
 
 const WHATSAPP_NUMBER = "5493415907913";
+const SHIPPING_PRICE = 4000;
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTW9DKie_iYz__7nl0ASAo_P3Z_xyfyuM4mbNb6FOu0sjynehhCDoMRZ___K2ZpPo/exec";
 const PAYMENT_ALIAS = "fluxstoree";
 const PAYMENT_HOLDER = "Constanza Malvina Pompei";
@@ -212,7 +213,7 @@ function saveCart() {
 
 function renderCart() {
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  const total = cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
+  const total = getOrderTotal();
 
   document.querySelector("#cartCount").textContent = count;
   document.querySelector("#cartTotal").textContent = money(total);
@@ -242,6 +243,10 @@ sendOrderBtn.onclick = event => {
 }
 function getCartTotal() {
   return cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
+}
+
+function getOrderTotal() {
+  return getCartTotal() + SHIPPING_PRICE;
 }
 
 function getCartProductsText() {
@@ -500,7 +505,8 @@ function openCheckout() {
     return;
   }
 
-  document.querySelector("#checkoutResumeTotal").textContent = money(getCartTotal());
+  document.querySelector("#checkoutProductsTotal").textContent = money(getCartTotal());
+  document.querySelector("#checkoutResumeTotal").textContent = money(getOrderTotal());
 
   document.querySelector("#checkoutDataScreen").classList.add("active");
   document.querySelector("#checkoutPaymentScreen").classList.remove("active");
@@ -579,8 +585,8 @@ async function handleCheckoutSubmit(event) {
   direccion: `${customerData.ciudad} - ${customerData.direccion}`,
   pago: customerData.pago,
   horario: customerData.horario,
-  productos: getCartProductsText(),
-  total: money(getCartTotal()),
+  productos: `${getCartProductsText()} | Envío: ${money(SHIPPING_PRICE)}`,
+  total: money(getOrderTotal()),
   observaciones: `${customerData.observaciones || ""} | Estado de pago: ${paymentStatus}`
   };
 
