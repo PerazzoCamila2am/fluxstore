@@ -1,6 +1,13 @@
 
 const WHATSAPP_NUMBER = "5493415907913";
-const SHIPPING_PRICE = 4000;
+const SHIPPING_PRICES = {
+  "Rosario": 4000,
+  "Villa Gobernador Gálvez": 5000,
+  "Funes": 6000,
+  "Pérez": 6000
+};
+
+let selectedCity = "";
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTW9DKie_iYz__7nl0ASAo_P3Z_xyfyuM4mbNb6FOu0sjynehhCDoMRZ___K2ZpPo/exec";
 const PAYMENT_ALIAS = "fluxstore1";
 const PAYMENT_HOLDER = "Constanza Malvina Pompei";
@@ -245,8 +252,12 @@ function getCartTotal() {
   return cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
 }
 
-function getOrderTotal() {
-  return getCartTotal() + SHIPPING_PRICE;
+function getShippingPrice(city = selectedCity) {
+  return SHIPPING_PRICES[city] || 0;
+}
+
+function getOrderTotal(city = selectedCity) {
+  return getCartTotal() + getShippingPrice(city);
 }
 
 function getCartProductsText() {
@@ -505,8 +516,13 @@ function openCheckout() {
     return;
   }
 
+  selectedCity = document.querySelector("#checkoutCity")?.value || "";
+
   document.querySelector("#checkoutProductsTotal").textContent = money(getCartTotal());
-  document.querySelector("#checkoutResumeTotal").textContent = money(getOrderTotal());
+  document.querySelector("#checkoutShippingTotal").textContent = selectedCity
+    ? money(getShippingPrice(selectedCity))
+    : "Elegí ciudad";
+  document.querySelector("#checkoutResumeTotal").textContent = money(getOrderTotal(selectedCity));
 
   document.querySelector("#checkoutDataScreen").classList.add("active");
   document.querySelector("#checkoutPaymentScreen").classList.remove("active");
@@ -585,8 +601,8 @@ async function handleCheckoutSubmit(event) {
   direccion: `${customerData.ciudad} - ${customerData.direccion}`,
   pago: customerData.pago,
   horario: customerData.horario,
-  productos: `${getCartProductsText()} | Envío: ${money(SHIPPING_PRICE)}`,
-  total: money(getOrderTotal()),
+  productos: `${getCartProductsText()} | Envío ${customerData.ciudad}: ${money(getShippingPrice(customerData.ciudad))}`,
+  total: money(getOrderTotal(customerData.ciudad)),
   observaciones: `${customerData.observaciones || ""} | Estado de pago: ${paymentStatus}`
   };
 
@@ -671,6 +687,22 @@ async function copyCheckoutAlias() {
   }, 1800);
 }
 
+function updateCheckoutTotalsByCity() {
+  const city = document.querySelector("#checkoutCity").value;
+  selectedCity = city;
+
+  document.querySelector("#checkoutProductsTotal").textContent = money(getCartTotal());
+
+  if (!city) {
+    document.querySelector("#checkoutShippingTotal").textContent = "Elegí ciudad";
+    document.querySelector("#checkoutResumeTotal").textContent = money(getCartTotal());
+    return;
+  }
+
+  document.querySelector("#checkoutShippingTotal").textContent = money(getShippingPrice(city));
+  document.querySelector("#checkoutResumeTotal").textContent = money(getOrderTotal(city));
+}
+
 function setup() {
   renderProducts();
   renderPrices();
@@ -708,6 +740,7 @@ function setup() {
   });
 
   document.querySelector("#checkoutForm").addEventListener("submit", handleCheckoutSubmit);
+  document.querySelector("#checkoutCity").addEventListener("change", updateCheckoutTotalsByCity);
 
   document.querySelector("#closeCheckout").addEventListener("click", closeCheckout);
 
