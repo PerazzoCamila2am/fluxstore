@@ -2,9 +2,9 @@
 const WHATSAPP_NUMBER = "5493415907913";
 const SHIPPING_PRICE = 4000;
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTW9DKie_iYz__7nl0ASAo_P3Z_xyfyuM4mbNb6FOu0sjynehhCDoMRZ___K2ZpPo/exec";
-const PAYMENT_ALIAS = "fluxstoree";
+const PAYMENT_ALIAS = "fluxstore1";
 const PAYMENT_HOLDER = "Constanza Malvina Pompei";
-const PAYMENT_CVU = "3840200500000015731294";
+const PAYMENT_CVU = "0070267830004073759367";
 
 const products = [
   {
