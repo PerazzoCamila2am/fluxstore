@@ -553,6 +553,11 @@ function validateCheckoutData(customerData) {
     return false;
   }
 
+  if (!customerData.email || !customerData.email.includes("@")) {
+  alert("Ingresá un email válido.");
+  return false;
+  }
+
   if (!customerData.ciudad) {
     alert("Elegí tu ciudad.");
     return false;
@@ -579,6 +584,7 @@ async function handleCheckoutSubmit(event) {
   const customerData = {
   nombre: document.querySelector("#checkoutName").value.trim(),
   whatsapp: document.querySelector("#checkoutWhatsapp").value.trim(),
+  email: document.querySelector("#checkoutEmail").value.trim(),
   ciudad: document.querySelector("#checkoutCity").value,
   direccion: document.querySelector("#checkoutAddress").value.trim(),
   horario: document.querySelector("#checkoutTime").value.trim(),
@@ -594,15 +600,25 @@ async function handleCheckoutSubmit(event) {
   ? "Pendiente de transferencia"
   : "Pago en efectivo al recibir";
 
-  const orderData = {
+const shippingPrice = getShippingPrice(customerData.ciudad);
+const productsTotal = getCartTotal();
+const finalTotal = getOrderTotal(customerData.ciudad);
+
+const orderData = {
   pedidoId: orderId,
   nombre: customerData.nombre,
   whatsapp: customerData.whatsapp,
+  email: customerData.email,
+  ciudad: customerData.ciudad,
   direccion: `${customerData.ciudad} - ${customerData.direccion}`,
+  direccionSimple: customerData.direccion,
   pago: customerData.pago,
   horario: customerData.horario,
-  productos: `${getCartProductsText()} | Envío ${customerData.ciudad}: ${money(getShippingPrice(customerData.ciudad))}`,
-  total: money(getOrderTotal(customerData.ciudad)),
+  productos: `${getCartProductsText()} | Envío ${customerData.ciudad}: ${money(shippingPrice)}`,
+  productosDetalle: getCartProductsText(),
+  subtotal: money(productsTotal),
+  envio: money(shippingPrice),
+  total: money(finalTotal),
   observaciones: `${customerData.observaciones || ""} | Estado de pago: ${paymentStatus}`
   };
 
