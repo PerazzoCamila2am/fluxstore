@@ -8,7 +8,7 @@ const SHIPPING_PRICES = {
 };
 
 let selectedCity = "";
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxplod7kT_CJwB94ZFPJs0Z-HMFkljZx6oKRQsRm7vOYSV5e0jToIe1m3gj-dP1e_EIrQ/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZNkj8BfUgq2NM4AggunkNID8LKdevR06TO4XgNdp7VaZUnedwaAmS8gGDndKMhCaFJw/exec";
 const PAYMENT_ALIAS = "fluxstore1";
 const PAYMENT_HOLDER = "Constanza Malvina Pompei";
 const PAYMENT_CVU = "0070267830004073759367";
