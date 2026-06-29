@@ -53,15 +53,17 @@ const products = [
     puffs: "40k",
     price: 24990,
     image: "assets/elfbar-ice-40k.png",
-    flavors: "Baja Splash, Peach Blue Slush, Strawberry Watermelon, Hawaiian Slush, Black Mint, Cherry Fuse, Miami Mint",
+    flavors: "Baja Splash, Peach Blue Slush, Strawberry Watermelon, Hawaiian Slush, Black Mint, Cherry Fuse, Miami Mint, Dragon Strawnana, Grape Ice",
     flavorOptions: [
       { name: "Baja Splash", image: "assets/elfbar-baja-splash.jpeg",  stock: true},
-      { name: "Peach Blue Slush", image: "assets/elfbar-peach-blue-slush.jpeg",  stock: true},
+      { name: "Peach Blue Slush", image: "assets/elfbar-peach-blue-slush.jpeg",  stock: false},
       { name: "Strawberry Watermelon", image: "assets/elfbar-strawberry-watermelon.jpeg",  stock: true},
       { name: "Hawaiian Slush", image: "assets/elfbar-hawaiian-slush.jpeg",  stock: true},
       { name: "Black Mint", image: "assets/elfbar-black-mint.jpeg",  stock: true},
-      { name: "Cherry Fuse", image: "assets/elfbar-cherry-fuse.jpeg",  stock: true},
-      { name: "Miami Mint", image: "assets/elfbar-miami-mint.jpeg",  stock: true}
+      { name: "Cherry Fuse", image: "assets/elfbar-cherry-fuse.jpeg",  stock: false},
+      { name: "Miami Mint", image: "assets/elfbar-miami-mint.jpeg",  stock: true},
+      { name: "Dragon Strawnana", image: "assets/elfbar-dragon-strawnana.jpeg", stock: true},
+      { name: "Grape Ice", image: "assets/elfbar-grape-ice.jpeg", stock: true}
     ]
   },
   {
