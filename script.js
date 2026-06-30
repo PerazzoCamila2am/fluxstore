@@ -249,7 +249,10 @@ function renderCart() {
         ${item.selectedFlavor ? `<small>Sabor: ${item.selectedFlavor}</small><br>` : ""}
         <small>
           ${item.qty} x ${money(item.price)}
-          ${item.promoQty && item.qty >= item.promoQty ? `<br>Promo aplicada: ${item.promoQty} x ${money(item.promoPrice)}` : ""}
+          ${item.promoQty && getPromoQtyInCart(item.id) >= item.promoQty
+            ? `<br>Promo aplicada: ${item.promoQty} x ${money(item.promoPrice)}`
+            : ""
+          }
         </small>
       </div>
 
@@ -258,15 +261,48 @@ function renderCart() {
   `).join("") : `<p class="flavors">Todavía no agregaste productos.</p>`;
 
   const sendOrderBtn = document.querySelector("#sendOrder");
-sendOrderBtn.href = "#";
-sendOrderBtn.onclick = event => {
-  event.preventDefault();
-  openCheckout();
-};
-
+  sendOrderBtn.href = "#";
+  sendOrderBtn.onclick = event => {
+    event.preventDefault();
+    openCheckout();
+  };
 }
+
+function getPromoQtyInCart(productId) {
+  return cart
+    .filter(item => item.id === productId && item.promoQty && item.promoPrice)
+    .reduce((sum, item) => sum + item.qty, 0);
+}
+
 function getCartTotal() {
-  return cart.reduce((sum, item) => sum + getItemSubtotal(item), 0);
+  let total = 0;
+  const promoGroups = {};
+
+  cart.forEach(item => {
+    if (item.promoQty && item.promoPrice) {
+      if (!promoGroups[item.id]) {
+        promoGroups[item.id] = {
+          promoQty: item.promoQty,
+          promoPrice: item.promoPrice,
+          unitPrice: item.price,
+          qty: 0
+        };
+      }
+
+      promoGroups[item.id].qty += item.qty;
+    } else {
+      total += item.price * item.qty;
+    }
+  });
+
+  Object.values(promoGroups).forEach(group => {
+    const promoSets = Math.floor(group.qty / group.promoQty);
+    const remaining = group.qty % group.promoQty;
+
+    total += promoSets * group.promoPrice + remaining * group.unitPrice;
+  });
+
+  return total;
 }
 
 function getShippingPrice(city = selectedCity) {
@@ -278,11 +314,43 @@ function getOrderTotal(city = selectedCity) {
 }
 
 function getCartProductsText() {
-  return cart.map(i => {
-  const promoApplied = i.promoQty && i.qty >= i.promoQty;
-  const promoText = promoApplied ? ` promo ${i.promoQty} x ${money(i.promoPrice)}` : "";
-  return `${i.qty} x ${i.name}${i.selectedFlavor ? ` (${i.selectedFlavor})` : ""} - ${money(getItemSubtotal(i))}${promoText}`;
-}).join(" | ");
+  const lines = cart.map(item => {
+    return `${item.qty} x ${item.name}${item.selectedFlavor ? ` (${item.selectedFlavor})` : ""} - ${money(item.price * item.qty)}`;
+  });
+
+  const promoLines = [];
+
+  const promoGroups = {};
+
+  cart.forEach(item => {
+    if (item.promoQty && item.promoPrice) {
+      if (!promoGroups[item.id]) {
+        promoGroups[item.id] = {
+          name: item.name,
+          promoQty: item.promoQty,
+          promoPrice: item.promoPrice,
+          unitPrice: item.price,
+          qty: 0
+        };
+      }
+
+      promoGroups[item.id].qty += item.qty;
+    }
+  });
+
+  Object.values(promoGroups).forEach(group => {
+    if (group.qty >= group.promoQty) {
+      const normalTotal = group.qty * group.unitPrice;
+      const promoSets = Math.floor(group.qty / group.promoQty);
+      const remaining = group.qty % group.promoQty;
+      const promoTotal = promoSets * group.promoPrice + remaining * group.unitPrice;
+      const discount = normalTotal - promoTotal;
+
+      promoLines.push(`Promo ${group.name}: ${group.promoQty} x ${money(group.promoPrice)} | Descuento: -${money(discount)}`);
+    }
+  });
+
+  return [...lines, ...promoLines].join(" | ");
 }
 
 function createOrderId() {
@@ -297,13 +365,11 @@ function getCartWhatsappText(customerData) {
 
   return `Hola Fluxstore, quiero hacer este pedido ${customerData.pedidoId || ""}:
 
-${cart.map(i => {
-  const promoApplied = i.promoQty && i.qty >= i.promoQty;
-  const promoText = promoApplied ? ` promo aplicada (${i.promoQty} x ${money(i.promoPrice)})` : "";
-  return `• ${i.qty} x ${i.name}${i.selectedFlavor ? ` (${i.selectedFlavor})` : ""} - ${money(getItemSubtotal(i))}${promoText}`;
+${cart.map(item => {
+  return `• ${item.qty} x ${item.name}${item.selectedFlavor ? ` (${item.selectedFlavor})` : ""} - ${money(item.price * item.qty)}`;
 }).join("\n")}
 
-Total estimado: ${money(total)}
+Total productos: ${money(total)}
 
 Nombre: ${customerData.nombre}
 WhatsApp: ${customerData.whatsapp}
@@ -314,7 +380,6 @@ Observaciones: ${customerData.observaciones || "Sin observaciones"}
 
 ¿Me confirmás disponibilidad, sabores y envío?`;
 }
-
 
 function starsText(rating) {
   const full = "★".repeat(rating);
