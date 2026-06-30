@@ -38,8 +38,8 @@ const products = [
     flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice, Menthol, Sakura Grape",
     flavorOptions: [
       { name: "Icy Mint", image: "assets/rabbeats-icy-mint.jpeg",  stock: false},
-      { name: "Blueberry Lemon", image: "assets/rabbeats-blueberry-lemon.jpeg",  stock: false},
-      { name: "Strawberry Ice", image: "assets/rabbeats-strawberry-ice.jpeg",  stock: false},
+      { name: "Blueberry Lemon", image: "assets/rabbeats-blueberry-lemon.jpeg",  stock: true},
+      { name: "Strawberry Ice", image: "assets/rabbeats-strawberry-ice.jpeg",  stock: true},
       { name: "Pineapple Ice", image: "assets/rabbeats-pineapple-ice.jpeg",  stock: true},
       { name: "Fanta Strawberry", image: "assets/rabbeats-fanta-strawberry.jpeg",  stock: false},
       { name: "Banana Ice", image: "assets/rabbeats-banana-ice.jpeg",  stock: true},
