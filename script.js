@@ -35,7 +35,7 @@ const products = [
     puffs: "50k",
     price: 24990,
     image: "assets/rabbeats-50k.png",
-    flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice, Menthol, Sakura Grape",
+    flavors: "Icy Mint, Blueberry Lemon, Strawberry Ice, Pineapple Ice, Fanta Strawberry, Banana Ice, Menthol, Sakura Grape, Triple Berry, Watermelon Ice",
     flavorOptions: [
       { name: "Icy Mint", image: "assets/rabbeats-icy-mint.jpeg",  stock: false},
       { name: "Blueberry Lemon", image: "assets/rabbeats-blueberry-lemon.jpeg",  stock: true},
@@ -45,6 +45,8 @@ const products = [
       { name: "Banana Ice", image: "assets/rabbeats-banana-ice.jpeg",  stock: true},
       { name: "Menthol", image: "assets/rabbeats-menthol.jpeg",  stock: false},
       { name: "Sakura Grape", image: "assets/rabbeats-sakura-grape.jpeg",  stock: false},
+      { name: "Triple Berry", image: "assets/rabbeats-triple-berry.jpeg", stock: true},
+      { name: "Watermelon Ice", image: "assets/rabbeats-watermelon-ice.jpeg", stock: true}
     ]
   },
   {
