@@ -135,58 +135,73 @@ function getItemSubtotal(item) {
   return item.price * item.qty;
 }
 
-function renderProducts(filter = "all") {
-  const grid = document.querySelector("#productGrid");
-  const list = filter === "all" ? products : products.filter(p => p.puffs === filter);
-  grid.innerHTML = list.map(p => `
-    <article class="product-card ${p.soldOut ? "sold-out" : ""}" data-puffs="${p.puffs}">
-  <div class="product-image-wrap">
-    <img src="${p.image}" alt="${p.name}">
-    ${p.soldOut ? `<span class="sold-out-badge">Agotado</span>` : ""}
-  </div>
-      <div class="product-body">
-        <div class="product-top">
-          <h3 class="product-title">${p.name}</h3>
-          <span class="product-price">
-          ${p.oldPrice ? `<small class="old-price">${money(p.oldPrice)}</small>` : ""}
-           ${money(p.price)}
-          </span>
+let currentFilter = "all";
+let currentSearch = "";
+
+function renderProducts(filter = currentFilter) {
+  currentFilter = filter;
+
+  const search = currentSearch.toLowerCase().trim();
+
+  const filtered = products.filter(product => {
+    const matchesFilter = currentFilter === "all" || product.puffs === currentFilter;
+
+    const searchableText = `
+      ${product.name}
+      ${product.puffs}
+      ${product.flavors || ""}
+      ${(product.flavorOptions || []).map(flavor => flavor.name).join(" ")}
+    `.toLowerCase();
+
+    const matchesSearch = !search || searchableText.includes(search);
+
+    return matchesFilter && matchesSearch;
+  });
+
+  document.querySelector("#productGrid").innerHTML = filtered.length ? filtered.map(product => `
+    <article class="product-card ${product.soldOut ? "sold-out" : ""}">
+      <div class="product-img">
+        ${product.discount ? `<span class="discount">${product.discount}</span>` : ""}
+        ${product.soldOut ? `<span class="stock-badge">Sin stock</span>` : ""}
+        <img src="${product.image}" alt="${product.name}">
+      </div>
+
+      <div class="product-info">
+        <span class="puffs">${product.puffs.toUpperCase()} PUFFS</span>
+        <h3>${product.name}</h3>
+
+        <p class="flavors">${product.flavors || ""}</p>
+
+        <div class="product-price">
+          ${product.oldPrice ? `<small>${money(product.oldPrice)}</small>` : ""}
+          <strong>${money(product.price)}</strong>
         </div>
-        <span class="puffs">${p.puffs.toUpperCase()} puffs</span>
-        ${p.discount ? `<span class="discount-badge">${p.discount}</span>` : ""}
-        ${p.promoText ? `<span class="promo-badge">${p.promoText}</span>` : ""}
-        <p class="flavors">${p.flavors}</p>
+
+        ${product.promoText ? `<div class="promo-badge">${product.promoText}</div>` : ""}
 
         <div class="product-actions">
-          ${p.soldOut
-         ? `<button class="btn disabled" disabled>Agotado</button>`
-        : `<button class="btn" onclick="openFlavorsModal('${p.id}')">Ver sabores</button>`
-        }
-           <a 
-            class="btn ghost" 
-            href="${waLink(`Hola Fluxstore, quiero consultar por ${p.name}. ¿Qué sabores tenés disponibles?`)}" 
-           target="_blank"
-          onclick="trackClick('Consultar producto', '${p.name}')"
-            >
-              Consultar
+          ${product.soldOut
+            ? `<button class="btn disabled" disabled>Agotado</button>`
+            : `<button class="btn" onclick="openFlavorsModal('${product.id}')">Ver sabores</button>`
+          }
+
+          <a
+            class="btn ghost"
+            href="${waLink(`Hola Fluxstore, quiero consultar por ${product.name}. ¿Hay stock disponible?`)}"
+            target="_blank"
+            onclick="trackClick('Consultar producto', '${product.name}')"
+          >
+            Consultar
           </a>
         </div>
-        
       </div>
     </article>
-  `).join("");
-}
-
-function renderPrices() {
-  document.querySelector("#priceTable").innerHTML = products.map(p => `
-    <div class="price-row">
-      <strong>${p.name}</strong>
-      <span>
-      ${p.oldPrice ? `<small class="old-price">${money(p.oldPrice)}</small>` : ""}
-      ${money(p.price)}
-      </span>
+  `).join("") : `
+    <div class="empty-products">
+      <h3>No encontramos productos</h3>
+      <p>Probá con otra búsqueda o cambiá el filtro.</p>
     </div>
-  `).join("");
+  `;
 }
 
 function addToCart(id, flavor = "") {
@@ -222,7 +237,7 @@ function saveCart() {
 
 function renderCart() {
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  const total = getOrderTotal();
+  const total = getCartTotal();
 
   document.querySelector("#cartCount").textContent = count;
   document.querySelector("#cartTotal").textContent = money(total);
@@ -723,18 +738,24 @@ function updateCheckoutTotalsByCity() {
 
 function setup() {
   renderProducts();
-  renderPrices();
   renderCart();
   loadReviews();
   setupStarPicker();
 
-  document.querySelectorAll(".chip[data-filter]").forEach(chip => {
-    chip.addEventListener("click", () => {
-      document.querySelectorAll(".chip[data-filter]").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      renderProducts(chip.dataset.filter);
-    });
+document.querySelectorAll(".chip[data-filter]").forEach(chip => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".chip[data-filter]").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+
+    currentFilter = chip.dataset.filter;
+    renderProducts(currentFilter);
   });
+});
+
+document.querySelector("#productSearch").addEventListener("input", event => {
+  currentSearch = event.target.value;
+  renderProducts(currentFilter);
+});
 
   document.querySelector("#cartToggle").addEventListener("click", () => {
     document.querySelector("#cart").classList.toggle("open");

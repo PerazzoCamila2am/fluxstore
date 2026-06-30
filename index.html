@@ -26,7 +26,6 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#catalogo">Catálogo</a>
-        <a href="#precios">Precios</a>
         <a href="#resenas">Reseñas</a>
         <a href="#contacto">Contacto</a>
       </div>
@@ -78,25 +77,23 @@
         <p>Filtrá por puffs, entrá al producto, elegí sabor y agregalo al carrito.</p>
       </div>
 
+      <div class="catalog-tools">
+      <label class="catalog-search">
+    <span>Buscar producto</span>
+    <input type="search" id="productSearch" placeholder="Ej: Luffbar, Ice, 40K, frutilla...">
+      </label>
+
       <div class="filters" role="list" aria-label="Filtros de catálogo">
-        <button class="chip active" data-filter="all">Todos</button>
-        <button class="chip" data-filter="55k">55K</button>
-        <button class="chip" data-filter="50k">50K</button>
-        <button class="chip" data-filter="40k">40K</button>
-        <button class="chip" data-filter="30k">30K</button>
-        <button class="chip" data-filter="20k">20K</button>
-      </div>
+    <button class="chip active" data-filter="all">Todos</button>
+    <button class="chip" data-filter="55k">55K</button>
+    <button class="chip" data-filter="50k">50K</button>
+    <button class="chip" data-filter="40k">40K</button>
+    <button class="chip" data-filter="30k">30K</button>
+    <button class="chip" data-filter="20k">20K</button>
+    </div>
+    </div>
 
       <div class="product-grid" id="productGrid"></div>
-    </section>
-
-    <section class="wrap section" id="precios">
-      <div class="section-head">
-        <p class="eyebrow">Lista rápida</p>
-        <h2>Precios destacados</h2>
-      </div>
-
-      <div class="price-table" id="priceTable"></div>
     </section>
 
 
@@ -173,7 +170,7 @@
       <div id="cartItems" class="cart-items"></div>
 
       <div class="cart-total">
-        <span>Total con envío</span>
+        <span>Total productos</span>
         <strong id="cartTotal">$0</strong>
       </div>
 
@@ -181,7 +178,7 @@
     </div>
   </aside>
 
-  <section class="checkout-modal" id="checkoutModal">
+<section class="checkout-modal" id="checkoutModal">
   <div class="checkout-box">
     <button class="checkout-close" id="closeCheckout" type="button">×</button>
 
@@ -229,8 +226,8 @@
         </label>
 
         <label>
-          Forma de Pago
-          <select  id="checkoutPayment" required>
+          Forma de pago
+          <select id="checkoutPayment" required>
             <option value="">Elegir forma de pago</option>
             <option value="Transferencia">Transferencia</option>
             <option value="Efectivo">Efectivo</option>
@@ -252,26 +249,30 @@
             <span>Productos</span>
             <strong id="checkoutProductsTotal">$0</strong>
           </div>
+
           <div>
             <span>Envío</span>
             <strong id="checkoutShippingTotal">Elegí ciudad</strong>
           </div>
-          <div class="checkout-resume-total">
-          <span>Total</span>
-          <strong id="checkoutResumeTotal">$0</strong>
-        </div>
-      </div>
 
-        <button class="btn primary full" type="submit">Continuar al pago</button>
+          <div class="checkout-resume-total">
+            <span>Total</span>
+            <strong id="checkoutResumeTotal">$0</strong>
+          </div>
+        </div>
+
+        <button class="btn primary full" type="submit">Continuar</button>
       </form>
     </div>
 
     <div class="checkout-screen" id="checkoutPaymentScreen">
       <p class="eyebrow">Pedido registrado</p>
       <h2>Transferencia</h2>
+
       <p class="checkout-help" id="checkoutPaymentHelp">
         Revisá los datos del pedido para finalizar la compra.
       </p>
+
       <div class="payment-summary">
         <div>
           <small>Número de pedido</small>
@@ -279,7 +280,7 @@
         </div>
 
         <div>
-          <small>Total a transferir</small>
+          <small>Total del pedido</small>
           <strong id="checkoutPaymentTotal">$0</strong>
         </div>
       </div>
@@ -315,8 +316,7 @@
       </a>
     </div>
   </div>
-  </section>
-
+</section>
 
 
   <section class="flavors-modal" id="flavorsModal">
@@ -335,7 +335,6 @@
 
       <div>
         <a href="#catalogo">Catálogo</a>
-        <a href="#precios">Precios</a>
         <a href="#resenas">Reseñas</a>
         <a href="#contacto">WhatsApp</a>
       </div>
