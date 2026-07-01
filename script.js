@@ -16,7 +16,7 @@ const PAYMENT_CVU = "0070267830004073759367";
 const products = [
   {
     id: "luffbar-55k",
-    name: "Luffbar Flare 55K",
+    name: "Luffbar",
     puffs: "55k",
     price: 26990,
     image: "assets/luffbar-55k.png",
@@ -31,7 +31,7 @@ const products = [
   },
   {
     id: "rabbeats-50k",
-    name: "RabBeats 50K",
+    name: "RabBeats",
     puffs: "50k",
     price: 24990,
     image: "assets/rabbeats-50k.png",
@@ -51,7 +51,7 @@ const products = [
   },
   {
     id: "elfbar-ice-40k",
-    name: "Elfbar Ice King 40K",
+    name: "Elfbar",
     puffs: "40k",
     price: 24990,
     image: "assets/elfbar-ice-40k.png",
@@ -70,7 +70,7 @@ const products = [
   },
   {
     id: "ignite-ice-40k",
-    name: "Ignite Ice 40K",
+    name: "Ignite",
     puffs: "40k",
     price: 29990,
     /*oldPrice: 30000,
@@ -90,7 +90,7 @@ const products = [
 
   {
     id: "wefume-30k",
-    name: "Wefume 30k",
+    name: "Wefume",
     puffs: "30k",
     price: 23990,
     promoQty: 2,
