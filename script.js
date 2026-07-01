@@ -31,7 +31,7 @@ const products = [
   },
   {
     id: "rabbeats-50k",
-    name: "Elfbar RabBeats 50K",
+    name: "RabBeats 50K",
     puffs: "50k",
     price: 24990,
     image: "assets/rabbeats-50k.png",
