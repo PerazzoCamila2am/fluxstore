@@ -24,9 +24,9 @@ const products = [
     flavorOptions: [
       { name: "Fruity Cool Dragonfruit", image: "assets/luffbar-fruity-cool-dragonfruit.jpeg",  stock: false },
       { name: "Alaska Ice", image: "assets/luffbar-alaska-ice.jpeg",  stock: true },
-      { name: "Straw Nana", image: "assets/luffbar-straw-nana.jpeg",  stock: true},
-      { name: "Grape Menthol", image: "assets/luffbar-fruity-cool-grape-menthol.jpeg",  stock: true},
-      { name: "Grape Slushy", image: "assets/luffbar-grape-slushy.jpeg",  stock: true}
+      { name: "Straw Nana", image: "assets/luffbar-straw-nana.jpeg",  stock: false},
+      { name: "Grape Menthol", image: "assets/luffbar-fruity-cool-grape-menthol.jpeg",  stock: false},
+      { name: "Grape Slushy", image: "assets/luffbar-grape-slushy.jpeg",  stock: false}
     ]
   },
   {
@@ -100,9 +100,9 @@ const products = [
     flavors: "Strawberry Kiwi, Lush Ice, Apple Pineapple, Miami Mix, Ice Mint",
     flavorOptions: [
       { name: "Strawberry Kiwi", image: "assets/wefume-strawberry-kiwi.jpeg",  stock: false},
-      { name: "Lush Ice", image: "assets/wefume-lush-ice.jpeg",  stock: true},
-      { name: "Apple Pineapple", image: "assets/wefume-apple-pineapple.jpeg",  stock: true},
-      { name: "Miami Mix", image: "assets/wefume-miami-mix.jpeg",  stock: true},
+      { name: "Lush Ice", image: "assets/wefume-lush-ice.jpeg",  stock: false},
+      { name: "Apple Pineapple", image: "assets/wefume-apple-pineapple.jpeg",  stock: false},
+      { name: "Miami Mix", image: "assets/wefume-miami-mix.jpeg",  stock: false},
       { name: "Ice Mint", image: "assets/wefume-ice-mint.jpeg",  stock: true}
     ]
   },
